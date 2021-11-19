@@ -1,8 +1,13 @@
-import Countdown from './src/countdown.js'
-import Giphy from './src/giphy.js'
+import Weather from "./src/weather.js";
 
-let countdown = new Countdown(1,2);
-countdown.render();
+// import Countdown from './src/countdown.js'
+// import Giphy from './src/giphy.js'
 
-let gifpane = new Giphy();
-gifpane.render();
+// let countdown = new Countdown(1,2);
+// countdown.render();
+
+// let gifpane = new Giphy();
+// gifpane.render();
+
+const weather = new Weather();
+weather.render();
