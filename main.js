@@ -1,8 +1,16 @@
 import Countdown from './src/countdown.js'
-import Giphy from './src/giphy.js'
+import RandomFoodPic from './random-food-pic.js';
+import ToDoList from './todolist.js';
+import FavMealsList from './favmeals.js'
 
-let countdown = new Countdown(1,2);
-countdown.render();
+// let countdown = new Countdown(1);
+// countdown.render();
 
-let gifpane = new Giphy();
-gifpane.render();
+// let foodpic = new RandomFoodPic();
+// foodpic.render();
+
+let todolist = new ToDoList();
+todolist.render();
+
+// let favlist = new FavMealsList();
+// favlist.render();
