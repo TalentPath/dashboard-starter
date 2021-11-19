@@ -6,10 +6,6 @@ class Weather {
         this.forecast = document.getElementById('forecast');
     }
 
-    static greet() {
-        console.log('hello');
-    }
-
     setCity(city) {
         this.city = city;
     }
@@ -17,14 +13,31 @@ class Weather {
     getCity() {
         return this.city;
     }
+
+    setWeather(response, index) {
+        const day = response.forecast.forecastday[index];
+        const current = document.createElement('div');
+        const currentImage = document.createElement('img');
+        const currentTemp = document.createElement('p');
+        const currentWind = document.createElement('p');
+
+        currentImage.setAttribute('src', day.day.condition.icon);
+        currentTemp.innerHTML = `${Math.floor(day.day.maxtemp_f)}&deg;`;
+        currentWind.innerHTML = `${Math.floor(day.day.maxwind_mph)} mph`;
+        current.appendChild(currentImage);
+        current.appendChild(currentTemp);
+        current.appendChild(currentWind);
+        this.forecast.appendChild(current);
+    }
     
     render() {
-        this.forecast.innerHTML = 'Hello';
-        // fetch(this.apiUrl)
-        //     .then(response => response.json)
-        //     .then(response => {
-
-        //     })
+        fetch(this.apiUrl)
+            .then(response => response.json())
+            .then(response => {
+                console.log(response.forecast);
+                let currentIndex = 0;
+                this.setWeather(response, currentIndex)
+            })
     }
 }
 
