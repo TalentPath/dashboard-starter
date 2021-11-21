@@ -18,8 +18,6 @@ class Restaurants {
             })
     }
 
-
-
     displayResults() {
         this.restaurantContainer.innerHTML = '';
         this.restaurants.forEach(restaurant => {
@@ -42,6 +40,7 @@ class Restaurants {
             console.log(filteredUrl);
             this.restaurantContainer.innerHTML = '';
             this.getRestaurants(filteredUrl);
+            cuisine.style.visibility = 'hidden';
         })
     }
 }
