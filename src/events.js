@@ -18,11 +18,14 @@ class Events {
                 const dateFilter = document.getElementById('date-filter');
 
                 filter.addEventListener('click', (event) => {
-                    dateFilter.style.visibility = 'visible';
+                    dateFilter.style.visibility === 'visible' 
+                        ? dateFilter.style.visibility = 'hidden' 
+                        : dateFilter.style.visibility = 'visible'; 
                 })
                 dateFilter.addEventListener('change', (event) => {
                     const filteredUrl = this.eventUrl + `&datetime_local.gte=${event.target.value}T00:00:00&datetime_local.lte=${event.target.value}T23:59:59`
                     this.getEvents(filteredUrl);
+                    dateFilter.style.visibility = 'hidden';
                 })
                 dateFilter.addEventListener('keydown', (event) => {
                     event.preventDefault();
