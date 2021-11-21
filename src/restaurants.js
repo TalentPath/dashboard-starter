@@ -2,32 +2,47 @@ class Restaurants {
     constructor() {
         this.restaurantContainer = document.getElementById('restaurants');
         this.restaurantKey = '44b4e42d38793b31f55325a775609ffe';
-        this.restaurantUrl = `https://api.documenu.com/v2/restaurants/search/fields?key=${this.restaurantKey}&lat=29.76&lon=-95.36&pricerange&cuisines&limit=25`
+        this.restaurantUrl = `https://api.documenu.com/v2/restaurants/search/geo?key=${this.restaurantKey}&lat=29.76&lon=-95.36&distance=50`;
         this.restaurants = null;
-        this.restaurantIndex = 0;
+        this.page = 1;
     }
 
     getRestaurants(url) {
+        console.log('working')
         fetch(url) 
             .then((response) => response.json())
             .then((response) => {
-                this.restaurants = response.data.filter(restaurant => restaurant.price_range !== '');
-                console.log(this.restaurants)
+                this.restaurants = response.data;
+                console.log(response)
                 this.displayResults();
             })
     }
 
+
+
     displayResults() {
-        for (let i = this.restaurantIndex; i < this.restaurantIndex + 5; i++) {
-            const restaurant = document.createElement('div');
-            restaurant.innerHTML = `<p>${this.restaurants[i].restaurant_name}</p><p>${this.restaurants[i].cuisines.join(', ')}</p><p>${this.restaurants[i].price_range}</p>`;
-            this.restaurantContainer.appendChild(restaurant);
-        }
+        this.restaurantContainer.innerHTML = '';
+        this.restaurants.forEach(restaurant => {
+            const restaurantDiv = document.createElement('div');
+            restaurantDiv.innerHTML = `<p>${restaurant.restaurant_name} <span>${restaurant.price_range}</span></p><p>${restaurant.cuisines.join(', ')}</p>`;
+            this.restaurantContainer.appendChild(restaurantDiv);
+        })
     }
 
     render() {
-        this.restaurantIndex = 0;
+        this.page = 1;
         this.getRestaurants(this.restaurantUrl);
+        const restaurantFilter = document.getElementById('restaurant-filter');
+        const cuisine = document.getElementById('cuisine');
+        restaurantFilter.addEventListener('click', (event) => {
+            cuisine.style.visibility === 'visible' ? cuisine.style.visibility = 'hidden' : cuisine.style.visibility = 'visible';
+        })
+        cuisine.addEventListener('change', (event) => {
+            const filteredUrl = this.restaurantUrl + `&cuisine=${event.target.value}`;
+            console.log(filteredUrl);
+            this.restaurantContainer.innerHTML = '';
+            this.getRestaurants(filteredUrl);
+        })
     }
 }
 
