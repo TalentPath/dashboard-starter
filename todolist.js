@@ -5,14 +5,14 @@ class ToDoList {
 
     render() {
         let toDoListForm = document.querySelector(".form");
-        console.log('todolistform', toDoListForm);
+        //console.log('todolistform', toDoListForm);
         // Do something when form is submitted
-        const todosUl = document.querySelector('#todos')
-        toDoListForm.addEventListener("submit", function (event) {
-            event.preventDefault();
+        const todosUl = document.querySelector('#todos');
+        toDoListForm.addEventListener("submit", (ev) => {
+            ev.preventDefault();
             let todo = document.querySelector('#todo').value;
             let todoLi = document.createElement('li');
-            todoLi.innerHTML = `${todo} <button class="delete">x</button>`;
+            todoLi.innerHTML = `${todo} <button class="delete">Remove</button>`;
             todosUl.appendChild(todoLi);
             document.getElementById("todo").value = ''
         });

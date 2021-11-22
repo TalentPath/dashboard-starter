@@ -1,16 +1,24 @@
-import Countdown from './src/countdown.js'
 import RandomFoodPic from './random-food-pic.js';
 import ToDoList from './todolist.js';
 import FavMealsList from './favmeals.js'
-
-// let countdown = new Countdown(1);
-// countdown.render();
+import MealRecipes from './meal-recipes.js'
+import CocktailRecipes from './cocktail-recipes.js';
+import NutritionInfo from './nutrition-info.js';
 
 // let foodpic = new RandomFoodPic();
 // foodpic.render();
 
+let favlist = new FavMealsList();
+favlist.render();
+
 let todolist = new ToDoList();
 todolist.render();
 
-// let favlist = new FavMealsList();
-// favlist.render();
+let mealrecipes = new MealRecipes();
+mealrecipes.render();
+
+let cocktailrecipes = new CocktailRecipes();
+cocktailrecipes.render();
+
+let nutritionifo = new NutritionInfo();
+nutritionifo.render();

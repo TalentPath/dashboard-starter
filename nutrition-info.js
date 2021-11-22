@@ -1,40 +1,65 @@
 //https://fdc.nal.usda.gov/api-key-signup.html
 
 class NutritionInfo{
-    api_key = '9b4V7GqPvj8MtNh9x165FjzGJQvImDzu';
-    gifArr = ['cat','dog','horse','hamster']
-    gifPane = document.querySelector('.pane2');
-    //url = 'https://api.nal.usda.gov/fdc/v1/foods/search?query=grape&pageSize=5&api_key=1JTshoMpKIsf15n7t2CXkzrPXCpq0maUdbxtXkWX'
+
+    nutritionPane = document.querySelector('.nutritionsearchresults');
+    API_key = '1JTshoMpKIsf15n7t2CXkzrPXCpq0maUdbxtXkWX';
+    url = `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${this.API_key}&pageSize=5&query=`
     constructor(){
        
     }
 
-    getGif(search){
-        return fetch(`https://api.giphy.com/v1/gifs/search?api_key=${this.api_key}&q=${search}&limit=1`)
+    getFetch(){
+        return fetch(this.url);
     }
 
-    
     render(){
-        let counter =0;
-        setInterval(async()=>{
-            if(counter===this.gifArr.length) counter=0;
-            let resp = await this.getGif(this.gifArr[counter])
-            let {data} = await resp.json();
-            let imgUrl = data[0].images.original.url;
-            this.gifPane.innerHTML=`<img class="gif" src="${imgUrl}" alt="${this.gifArr[counter]}"/>`
-            counter++;
-        },5000);
+        
+        document.addEventListener('DOMContentLoaded', () =>{
 
-        // fetch('https://api.nal.usda.gov/fdc/v1/foods/search?query=grape&pageSize=5&api_key=1JTshoMpKIsf15n7t2CXkzrPXCpq0maUdbxtXkWX').then(response => response.json()).then(content =>{
-        //     //console.log(content.foods[0].description); 
-        //     //array1.forEach(element => console.log(element));
-        //     content.foods.forEach(element => console.log(element.description))
-        //   })
+            document.getElementById("nutrition-searchbtn").addEventListener("click", async ev =>{
+                ev.preventDefault();
+                let searchValue = document.getElementById("nutrition-search").value;
+                this.url += searchValue;
 
+                let nutritionContent = "";
+
+                let resp = await this.getFetch();
+                let data = await resp.json();
+
+                console.log(data)
+
+                let randomInt = Math.floor(Math.random() * data.foods.length)
+                
+                let description = data.foods[randomInt].description;
+                let foodCategory = data.foods[randomInt].foodCategory;
+                let proteinObj = {
+                    nutrientName: data.foods[randomInt].foodNutrients[0].nutrientName,
+                    nutrientValue: data.foods[randomInt].foodNutrients[0].value,
+                    nutrientUnitName: data.foods[randomInt].foodNutrients[0].unitName
+                };
+                let carbObj = {
+                    nutrientName: data.foods[randomInt].foodNutrients[2].nutrientName,
+                    nutrientValue: data.foods[randomInt].foodNutrients[2].value,
+                    nutrientUnitName: data.foods[randomInt].foodNutrients[2].unitName
+                };
+                let totalFatObj = {
+                    nutrientName: data.foods[randomInt].foodNutrients[1].nutrientName,
+                    nutrientValue: data.foods[randomInt].foodNutrients[1].value,
+                    nutrientUnitName: data.foods[randomInt].foodNutrients[1].unitName
+                };
+                
+                nutritionContent = `
+                <h3>${description}</h3>
+                <p>Category: ${foodCategory}</p><br>
+                <p>${proteinObj.nutrientName}: ${proteinObj.nutrientValue} ${proteinObj.nutrientUnitName}
+                <p>${carbObj.nutrientName}: ${carbObj.nutrientValue} ${carbObj.nutrientUnitName}
+                <p>${totalFatObj.nutrientName}: ${totalFatObj.nutrientValue} ${totalFatObj.nutrientUnitName}
+                `
+                this.nutritionPane.innerHTML = nutritionContent;
+            })
+        })
     }
-
-
-
 }
 
 export default NutritionInfo;

@@ -1,41 +1,53 @@
 // https://www.thecocktaildb.com/api.php
 
 class CocktailRecipes{
-    api_key = '9b4V7GqPvj8MtNh9x165FjzGJQvImDzu';
-    gifArr = ['cat','dog','horse','hamster']
-    gifPane = document.querySelector('.pane2');
-    //url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=burger'
+    
+    cocktailPane = document.querySelector('.cocktailsearchresults');
+    url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
     constructor(){
        
     }
 
-    getGif(search){
-        return fetch(`https://api.giphy.com/v1/gifs/search?api_key=${this.api_key}&q=${search}&limit=1`)
+    getFetch(search){
+        return fetch(this.url)
     }
 
-    
     render(){
-        let counter =0;
-        setInterval(async()=>{
-            if(counter===this.gifArr.length) counter=0;
-            let resp = await this.getGif(this.gifArr[counter])
-            let {data} = await resp.json();
-            let imgUrl = data[0].images.original.url;
-            this.gifPane.innerHTML=`<img class="gif" src="${imgUrl}" alt="${this.gifArr[counter]}"/>`
-            counter++;
-        },5000);
+        
+        document.addEventListener('DOMContentLoaded', () =>{
 
-    //     fetch(url)
-    // .then(response => response.json())
-    // .then(content => {
-    //     console.log(content.drinks[0].strDrink)
-    // })
-    // })
+            document.getElementById("cocktail-searchbtn").addEventListener("click", async ev => {
+                ev.preventDefault();
+                let searchValue = document.getElementById("cocktail-search").value;
+                this.url += searchValue;
 
+                let cocktailContent = "";
+                
+                let resp = await this.getFetch();
+                let data = await resp.json();
+                console.log(data);
+
+                if(data.drinks === null){
+                    alert(`No results available for ${searchValue}. Please try another keyword.`)
+                }
+
+                let randomInt = Math.floor(Math.random() * data.drinks.length);
+
+                let strDrink = data.drinks[randomInt].strDrink;
+                let strInstructions = data.drinks[randomInt].strInstructions;
+                let strThumb = data.drinks[randomInt].strDrinkThumb;
+                //console.log(data.drinks[randomInt].strDrink);
+
+                cocktailContent = `
+                <h3>${strDrink}</h3>
+                <p>Instructions: ${strInstructions}</p><br>
+                <img src ="${strThumb}" alt = "" style="width: 50%">
+                `
+
+                this.cocktailPane.innerHTML = cocktailContent;
+            })
+        })
     }
-
-
-
 }
 
 export default CocktailRecipes;

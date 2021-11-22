@@ -1,41 +1,61 @@
 //https://www.themealdb.com/api.php
 
-class MealRecipes{
-    api_key = '9b4V7GqPvj8MtNh9x165FjzGJQvImDzu';
-    gifArr = ['cat','dog','horse','hamster']
-    gifPane = document.querySelector('.pane2');
-    //url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=burger'
-    constructor(){
-       
-    }
+class MealRecipes {
 
-    getGif(search){
-        return fetch(`https://api.giphy.com/v1/gifs/search?api_key=${this.api_key}&q=${search}&limit=1`)
-    }
-
-    
-    render(){
-        let counter =0;
-        setInterval(async()=>{
-            if(counter===this.gifArr.length) counter=0;
-            let resp = await this.getGif(this.gifArr[counter])
-            let {data} = await resp.json();
-            let imgUrl = data[0].images.original.url;
-            this.gifPane.innerHTML=`<img class="gif" src="${imgUrl}" alt="${this.gifArr[counter]}"/>`
-            counter++;
-        },5000);
-
-    //     fetch(url)
-    // .then(response => response.json())
-    // .then(content => {
-    //     console.log(content.meals[0].strArea)
-    // })
-    // })
+    mealPane = document.querySelector('.mealsearchresults');
+    url = 'https://www.themealdb.com/api/json/v1/1/search.php?s='
+    constructor() {
 
     }
 
+    getFetch() {
+        return fetch(this.url);
+    }
 
+    render() {
 
+        document.addEventListener('DOMContentLoaded', () => {
+
+            document.getElementById("meal-searchbtn").addEventListener("click", async ev => {
+                ev.preventDefault();
+                let searchValue = document.getElementById("meal-search").value;
+                this.url += searchValue;
+
+                let mealContent = "";
+                
+                let resp = await this.getFetch();
+                let data = await resp.json();
+
+                if(data.meals === null){
+                    alert(`No results available for ${searchValue}. Please try another keyword.`)
+                }
+
+                let randomInt = Math.floor(Math.random() * data.meals.length)
+
+                let strMeal = data.meals[randomInt].strMeal;
+                let strCategory = data.meals[randomInt].strCategory;
+                let strArea = data.meals[randomInt].strArea;
+                let strSource = data.meals[randomInt].strSource;
+                let strYoutube = data.meals[randomInt].strYoutube;
+                let strThumb = data.meals[randomInt].strMealThumb;
+
+                console.log(this.url)
+                console.log(data.meals[randomInt]);
+
+                mealContent = `
+                <h3>${strMeal}</h3>
+                <p>Category: ${strCategory}</p><br>
+                <p>Area: ${strArea}</p><br>
+                <p><a href="${strSource}" target="_blank">Source</a></p><br>
+                <p><a href="${strYoutube}" target="_blank">Youtube</a></p><br>
+                <img src ="${strThumb}" alt = "" style="width: 50%">
+                `
+                this.mealPane.innerHTML = mealContent;
+                document.getElementById("meal-search").value = '';
+                
+            })
+        });
+    }
 }
 
 export default MealRecipes;

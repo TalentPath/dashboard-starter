@@ -4,17 +4,17 @@ class FavMealsList {
     constructor(){}
 
     render() {
-        let favMealsListForm = document.getElementsByClassName("form2");
-        console.log('todolistform', faveMealsListForm);
+        let favMealsListForm = document.querySelector(".form2");
+        //console.log('todolistform', faveMealsListForm);
         // Do something when form is submitted
-        const favmealsUl = document.querySelector('#favmealss')
+        const favmealsUl = document.querySelector('#favmealss');
         favMealsListForm.addEventListener("submit", function (event) {
             event.preventDefault();
             let favmeal = document.querySelector('#favmeals').value;
             let favmealLi = document.createElement('li');
             favmealLi.innerHTML = `${favmeal} <button class="delete">x</button>`;
             favmealsUl.appendChild(favmealLi);
-            document.getElementById("favmeals").value = ''
+            document.getElementById("favmealss").value = ''
         });
 
         document.body.addEventListener('click', event => {
