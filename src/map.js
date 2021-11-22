@@ -39,6 +39,7 @@ class Map {
         const plus = document.getElementById('plus');
         const minus = document.getElementById('minus');
         const traffic = document.getElementById('traffic');
+        const directions = document.getElementById('directions');
 
         plus.addEventListener('click', (event) => {
             this.zoomIn();
@@ -59,6 +60,32 @@ class Map {
                 this.mapContainer.setAttribute('src', `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}`);
                 this.traffic = false;
             }
+        })
+        directions.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            const from = `${data.fromAddress.split(' ').join('+')},${data.fromCity},${data.fromState}`;
+            const to = `${data.toAddress.split(' ').join('+')},${data.toCity},${data.toState}`;
+            const directionBox = document.getElementById('direction-box');
+            fetch(`http://www.mapquestapi.com/directions/v2/route?key=${this.mapKey}&from=${from}&to=${to}`)
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response);
+                    const map = document.getElementById('map');
+                    response.route.legs[0].maneuvers.forEach(maneuver => {
+                        const current = document.createElement('div');
+                        const text = document.createElement('p');
+                        const image = document.createElement('img');
+                        image.setAttribute('src', maneuver.iconUrl);
+                        text.innerHTML = `${maneuver.narrative} - ${maneuver.distance.toFixed(1)} miles`;
+                        current.appendChild(image);
+                        current.appendChild(text);
+                        directionBox.appendChild(current);
+                        
+                    })
+                })
         })
     }
 }
