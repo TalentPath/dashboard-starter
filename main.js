@@ -14,12 +14,22 @@ class Main {
         this.map = new Map(this.lat, this.lon);
     }
 
+    setLatLon(lat, lon) {
+        this.events.lat = lat;
+        this.events.lon = lon;
+        this.restaurants.lat = lat;
+        this.restaurants.lon = lon;
+        this.map.lat = lat;
+        this.map.lon = lon;
+    }
+
     setCity (city) {
         this.weather.setCity(city);
         const cityH1 = document.getElementById('city');
         const observer = new MutationObserver(() => {
-            this.events.getEvents(localStorage.lat, localStorage.lon);
-            this.restaurants.getRestaurants(localStorage.lat, localStorage.lon);
+            this.setLatLon(localStorage.lat, localStorage.lon)
+            this.events.getEvents(`https://api.seatgeek.com/2/events?client_id=${this.events.eventId}&client_secret=${this.events.clientSecret}&lat=${localStorage.lat}&lon=${localStorage.lon}&range=50mi`);
+            this.restaurants.getRestaurants(`https://api.documenu.com/v2/restaurants/search/geo?key=${this.restaurants.restaurantKey}&lat=${localStorage.lat}&lon=${localStorage.lon}&distance=20`);
             this.map.setMap(localStorage.lat, localStorage.lon)
         })
         observer.observe(cityH1, {attributes: true});

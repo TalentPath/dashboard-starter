@@ -9,11 +9,13 @@ class Restaurants {
         this.page = 1;
     }
 
-    getRestaurants(lat = this.lat, lon = this.lon) {
-        const currentUrl = `https://api.documenu.com/v2/restaurants/search/geo?key=${this.restaurantKey}&lat=${lat}&lon=${lon}&distance=50`
+    setLatLon(lat, lon) {
         this.lat = lat;
         this.lon = lon;
-        fetch(currentUrl) 
+    }
+
+    getRestaurants(url = this.restaurantUrl) {
+        fetch(url) 
             .then((response) => response.json())
             .then((response) => {
                 this.restaurants = response.data;
@@ -33,14 +35,14 @@ class Restaurants {
 
     render() {
         this.page = 1;
-        this.getRestaurants(this.lat, this.lon);
+        this.getRestaurants(this.restaurantUrl);
         const restaurantFilter = document.getElementById('restaurant-filter');
         const cuisine = document.getElementById('cuisine');
         restaurantFilter.addEventListener('click', (event) => {
             cuisine.style.visibility === 'visible' ? cuisine.style.visibility = 'hidden' : cuisine.style.visibility = 'visible';
         })
         cuisine.addEventListener('change', (event) => {
-            const filteredUrl = this.restaurantUrl + `&cuisine=${event.target.value}`;
+            const filteredUrl = `https://api.documenu.com/v2/restaurants/search/geo?key=${this.restaurantKey}&lat=${localStorage.lat}&lon=${localStorage.lon}&distance=20&cuisine=${event.target.value}`;
             console.log(filteredUrl);
             this.restaurantContainer.innerHTML = '';
             this.getRestaurants(filteredUrl);

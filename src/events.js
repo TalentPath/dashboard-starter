@@ -9,12 +9,10 @@ class Events {
         this.eventContainer = document.getElementById('events');
     }
 
-    getEvents(lat = this.lat, lon = this.lon) {
+    getEvents(url = this.eventUrl) {
         this.eventContainer.innerHTML = '';
-        this.lat = lat;
-        this.lon = lon;
-        const currentUrl = `https://api.seatgeek.com/2/events?client_id=${this.eventId}&client_secret=${this.clientSecret}&lat=${lat}&lon=${lon}&range=50mi`
-        fetch(currentUrl)
+    
+        fetch(url)
             .then((response) => response.json())
             .then((response) => {
                 console.log(response);
@@ -37,19 +35,25 @@ class Events {
                     
                     return false;
                 })
-
-                this.events.forEach(event => {
-                    const current = document.createElement('div');
-                    current.setAttribute('class', 'event');
-                    current.innerHTML = `<p>${new Date(event.datetime_local).getMonth() + 1}/${new Date(event.datetime_local).getDate()}</p>
-                        <p>${event.short_title}</p><p>${event.type}</p><p>${event.venue.name}</p>`;
-                    this.eventContainer.appendChild(current);
-                })
+                if (this.events.length) {
+                    this.events.forEach(event => {
+                        const current = document.createElement('div');
+                        current.setAttribute('class', 'event');
+                        current.innerHTML = `<p>${new Date(event.datetime_local).getMonth() + 1}/${new Date(event.datetime_local).getDate()}</p>
+                            <p>${event.short_title}</p><p>${event.type}</p><p>${event.venue.name}</p>`;
+                        this.eventContainer.appendChild(current);
+                    })
+                    
+                } else {
+                    const message = document.createElement('p');
+                    message.innerHTML = 'Sorry, no events for the chosen date';
+                    this.eventContainer.appendChild(message);
+                }
             })
     }
     
     render() {
-        this.getEvents();
+        this.getEvents(this.eventUrl);
     }
 }
 
