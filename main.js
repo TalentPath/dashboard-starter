@@ -14,8 +14,15 @@ class Main {
         this.map = new Map(this.lat, this.lon);
     }
 
-    setCity(city) {
+    setCity (city) {
         this.weather.setCity(city);
+        const cityH1 = document.getElementById('city');
+        const observer = new MutationObserver(() => {
+            this.events.getEvents(localStorage.lat, localStorage.lon);
+            this.restaurants.getRestaurants(localStorage.lat, localStorage.lon);
+            this.map.setMap(localStorage.lat, localStorage.lon)
+        })
+        observer.observe(cityH1, {attributes: true});
     }
 
     render() {
@@ -27,6 +34,9 @@ class Main {
         const change = document.getElementById('change');
         const cityInput = document.getElementById('city-input');
 
+        window.addEventListener('storage', (event) => {
+            console.log('worked');
+        })
         change.addEventListener('click', (event) => {
             changeForm.style.visibility = 'visible';
         })

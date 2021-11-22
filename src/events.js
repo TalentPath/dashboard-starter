@@ -9,9 +9,12 @@ class Events {
         this.eventContainer = document.getElementById('events');
     }
 
-    getEvents(url) {
+    getEvents(lat = this.lat, lon = this.lon) {
         this.eventContainer.innerHTML = '';
-        fetch(url)
+        this.lat = lat;
+        this.lon = lon;
+        const currentUrl = `https://api.seatgeek.com/2/events?client_id=${this.eventId}&client_secret=${this.clientSecret}&lat=${lat}&lon=${lon}&range=50mi`
+        fetch(currentUrl)
             .then((response) => response.json())
             .then((response) => {
                 console.log(response);
@@ -46,7 +49,7 @@ class Events {
     }
     
     render() {
-        this.getEvents(this.eventUrl)
+        this.getEvents();
     }
 }
 

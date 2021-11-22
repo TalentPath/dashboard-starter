@@ -8,6 +8,13 @@ class Map {
         this.mapContainer = document.getElementById('map-image');
     }
 
+    setMap(lat, lon) {
+        const currentUrl = `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${lat},${lon}&zoom=${this.zoom}`
+        this.mapContainer.setAttribute('src', currentUrl);
+        this.lat = lat;
+        this.lon = lon;
+    }
+
     zoomIn() {
         if (this.zoom < 18) {
             this.zoom++;

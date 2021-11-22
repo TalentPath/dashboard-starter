@@ -26,9 +26,12 @@ class Weather {
                 
                 this.setWeather(this.weatherInfo, this.currentIndex);
                 this.startInterval();
+                
+                cityName.removeAttribute('style');
+                cityName.style.visibility = 'visible';
                 localStorage.city = `${response.location.name}, ${response.location.region}`;
                 localStorage.lat = response.location.lat;
-                localStorage.lon = response.location.lon;  
+                localStorage.lon = response.location.lon;
             })
     }
 

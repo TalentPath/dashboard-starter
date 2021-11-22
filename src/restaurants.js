@@ -4,14 +4,16 @@ class Restaurants {
         this.lon = lon;
         this.restaurantContainer = document.getElementById('restaurants');
         this.restaurantKey = '44b4e42d38793b31f55325a775609ffe';
-        this.restaurantUrl = `https://api.documenu.com/v2/restaurants/search/geo?key=${this.restaurantKey}&lat=${this.lat}&lon=${this.lon}&distance=50`;
+        this.restaurantUrl = `https://api.documenu.com/v2/restaurants/search/geo?key=${this.restaurantKey}&lat=${this.lat}&lon=${this.lon}&distance=20`;
         this.restaurants = null;
         this.page = 1;
     }
 
-    getRestaurants(url) {
-        console.log('working')
-        fetch(url) 
+    getRestaurants(lat = this.lat, lon = this.lon) {
+        const currentUrl = `https://api.documenu.com/v2/restaurants/search/geo?key=${this.restaurantKey}&lat=${lat}&lon=${lon}&distance=50`
+        this.lat = lat;
+        this.lon = lon;
+        fetch(currentUrl) 
             .then((response) => response.json())
             .then((response) => {
                 this.restaurants = response.data;
@@ -31,7 +33,7 @@ class Restaurants {
 
     render() {
         this.page = 1;
-        this.getRestaurants(this.restaurantUrl);
+        this.getRestaurants(this.lat, this.lon);
         const restaurantFilter = document.getElementById('restaurant-filter');
         const cuisine = document.getElementById('cuisine');
         restaurantFilter.addEventListener('click', (event) => {
