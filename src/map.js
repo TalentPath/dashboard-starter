@@ -26,12 +26,25 @@ class Map {
         this.mapContainer.setAttribute('src', this.mapUrl);
         const plus = document.getElementById('plus');
         const minus = document.getElementById('minus');
+        const traffic = document.getElementById('traffic');
 
         plus.addEventListener('click', (event) => {
             this.zoomIn();
         })
         minus.addEventListener('click', (event) => {
             this.zoomOut();
+        })
+        traffic.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            if (event.target.innerHTML === 'See Traffic') {
+                event.target.innerHTML = 'Hide Traffic';
+                const currentUrl = this.mapUrl + '&traffic=flow';
+                this.mapContainer.setAttribute('src', currentUrl);
+            } else {
+                event.target.innerHTML = 'See Traffic';
+                this.mapContainer.setAttribute('src', this.mapUrl);
+            }
         })
     }
 }
