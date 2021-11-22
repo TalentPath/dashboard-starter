@@ -13,11 +13,23 @@ class Weather {
     }
 
     setCity(city) {
-        this.city = city;
-    }
-
-    getCity() {
-        return this.city;
+        clearInterval(this.weatherInterval);
+        const currentUrl = `http://api.weatherapi.com/v1/forecast.json?key=${this.apiKey}&q=${city}&days=5&aqi=no`
+        this.forecast.innerHTML = '';
+        fetch(currentUrl)
+            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+                const cityName = document.getElementById('city');
+                cityName.innerHTML = `${response.location.name}, ${response.location.region}`;
+                this.weatherInfo = response;
+                
+                this.setWeather(this.weatherInfo, this.currentIndex);
+                this.startInterval();
+                localStorage.city = `${response.location.name}, ${response.location.region}`;
+                localStorage.lat = response.location.lat;
+                localStorage.lon = response.location.lon;  
+            })
     }
 
     startInterval = () => {
@@ -87,14 +99,18 @@ class Weather {
     }
     
     render() {
+        this.forecast.innerHTML = '';
         fetch(this.apiUrl)
             .then(response => response.json())
             .then(response => {
                 console.log(response);
+                const cityName = document.getElementById('city');
+                cityName.innerHTML = `${response.location.name}, ${response.location.region}`;
                 this.weatherInfo = response;
                 
                 this.setWeather(this.weatherInfo, this.currentIndex);
                 this.startInterval();
+                return  [response.location.lat, response.location.lon];  
             })
     }
 }

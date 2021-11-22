@@ -14,11 +14,29 @@ class Main {
         this.map = new Map(this.lat, this.lon);
     }
 
+    setCity(city) {
+        this.weather.setCity(city);
+    }
+
     render() {
         this.weather.render();
         this.events.render();
         this.restaurants.render();
         this.map.render();
+        const changeForm = document.getElementById('change-form');
+        const change = document.getElementById('change');
+        const cityInput = document.getElementById('city-input');
+
+        change.addEventListener('click', (event) => {
+            changeForm.style.visibility = 'visible';
+        })
+        changeForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            this.city = cityInput.value;
+            console.log(cityInput.value);
+            this.setCity(cityInput.value);
+        })
     }
 }
 

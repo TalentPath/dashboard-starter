@@ -35,3 +35,7 @@
 #minus {
     margin-bottom: 10%;
 }
+
+#change-form {
+    visibility: hidden;
+}
