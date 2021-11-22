@@ -9,20 +9,30 @@ class Map {
     zoomIn() {
         if (this.zoom < 18) {
             this.zoom++;
+            this.mapUrl =`https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=29.76,-95.36&zoom=${this.zoom}`;
+            this.mapContainer.setAttribute('src', this.mapUrl);
         }
     }
 
     zoomOut() {
         if (this.zoom > 0) {
             this.zoom--;
+            this.mapUrl = `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=29.76,-95.36&zoom=${this.zoom}`;
+            this.mapContainer.setAttribute('src', this.mapUrl);
         }
     }
 
     render() {
-        this.zoom = 10;
         this.mapContainer.setAttribute('src', this.mapUrl);
         const plus = document.getElementById('plus');
-        const minus = document.getElementById('minus')
+        const minus = document.getElementById('minus');
+
+        plus.addEventListener('click', (event) => {
+            this.zoomIn();
+        })
+        minus.addEventListener('click', (event) => {
+            this.zoomOut();
+        })
     }
 }
 
