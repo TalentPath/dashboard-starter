@@ -74,7 +74,7 @@ class Map {
                 .then(response => {
                     console.log(response);
                     const map = document.getElementById('map');
-                    response.route.legs[0].maneuvers.forEach(maneuver => {
+                    response.route.legs[0].maneuvers.forEach((maneuver, i) => {
                         const current = document.createElement('div');
                         const text = document.createElement('p');
                         const image = document.createElement('img');
@@ -82,6 +82,11 @@ class Map {
                         text.innerHTML = `${maneuver.narrative} - ${maneuver.distance.toFixed(1)} miles`;
                         current.appendChild(image);
                         current.appendChild(text);
+                        if (i !== response.route.legs[0].maneuvers.length - 1) {
+                            const mapFull = document.createElement('img');
+                            mapFull.setAttribute('src', maneuver.mapUrl);
+                            current.appendChild(mapFull);
+                        }
                         directionBox.appendChild(current);
                         
                     })
