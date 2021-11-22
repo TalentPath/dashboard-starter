@@ -16,7 +16,7 @@
         <input type="date" name="date" id="date-filter">
         <div id="events"></div>
     </div>
-    <div id="restaurants-box">
+    <div id="restaurants-box" style="display: none">
         <p id="restaurant-filter">Search Cuisines</p>
         <select name="cuisine" id="cuisine">
             <option value="italian">Italian</option>
@@ -28,7 +28,15 @@
             <option value="seafood">Seafood</option>
             <option value="steak">Steak</option>
         </select>
-        <div id="restaurants"></div>
+        <div id="restaurants">
+        </div>
+    </div>
+    <div id="map-box">
+        <img id="map-image" src="">
+        <div id="buttons">
+            <p id="plus">+</p>
+            <p id="minus">_</p>
+        </div>
     </div>
     <script src="main.js" type="module"></script>
 </body>
