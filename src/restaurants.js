@@ -1,8 +1,10 @@
 class Restaurants {
-    constructor() {
+    constructor(lat, lon) {
+        this.lat = lat;
+        this.lon = lon;
         this.restaurantContainer = document.getElementById('restaurants');
         this.restaurantKey = '44b4e42d38793b31f55325a775609ffe';
-        this.restaurantUrl = `https://api.documenu.com/v2/restaurants/search/geo?key=${this.restaurantKey}&lat=29.76&lon=-95.36&distance=50`;
+        this.restaurantUrl = `https://api.documenu.com/v2/restaurants/search/geo?key=${this.restaurantKey}&lat=${this.lat}&lon=${this.lon}&distance=50`;
         this.restaurants = null;
         this.page = 1;
     }

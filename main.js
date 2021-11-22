@@ -10,12 +10,15 @@ class Main {
         this.lon = localStorage.lon || '-95.36';
         this.weather = new Weather(this.city);
         this.events = new Events(this.lat, this.lon);
+        this.restaurants = new Restaurants(this.lat, this.lon);
+        this.map = new Map(this.lat, this.lon);
     }
 
     render() {
         this.weather.render();
         this.events.render();
-
+        this.restaurants.render();
+        this.map.render();
     }
 }
 
