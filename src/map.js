@@ -6,6 +6,7 @@ class Map {
         this.zoom = 10;
         this.mapUrl = `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}`
         this.mapContainer = document.getElementById('map-image');
+        this.traffic = false;
     }
 
     setMap(lat, lon) {
@@ -18,7 +19,8 @@ class Map {
     zoomIn() {
         if (this.zoom < 18) {
             this.zoom++;
-            this.mapUrl =`https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}`;
+            this.mapUrl = this.traffic ? `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}&traffic=flow`
+                : `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}`;
             this.mapContainer.setAttribute('src', this.mapUrl);
         }
     }
@@ -26,7 +28,8 @@ class Map {
     zoomOut() {
         if (this.zoom > 0) {
             this.zoom--;
-            this.mapUrl = `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}`;
+            this.mapUrl = this.traffic ? `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}&traffic=flow`
+                : `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}`;
             this.mapContainer.setAttribute('src', this.mapUrl);
         }
     }
@@ -48,11 +51,13 @@ class Map {
 
             if (event.target.innerHTML === 'See Traffic') {
                 event.target.innerHTML = 'Hide Traffic';
-                const currentUrl = this.mapUrl + '&traffic=flow';
+                const currentUrl = `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}&traffic=flow`;
                 this.mapContainer.setAttribute('src', currentUrl);
+                this.traffic = true;
             } else {
                 event.target.innerHTML = 'See Traffic';
-                this.mapContainer.setAttribute('src', this.mapUrl);
+                this.mapContainer.setAttribute('src', `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}`);
+                this.traffic = false;
             }
         })
     }
