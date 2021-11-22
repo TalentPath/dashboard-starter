@@ -39,3 +39,7 @@
 #change-form {
     visibility: hidden;
 }
+
+#back {
+    display: none;
+}
