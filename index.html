@@ -8,15 +8,20 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+    <header>
+        <h1 id="city"></h1>
+        <p id="change">Change City</p>
+        <input type="text" placeholder="Enter city and state or zip code" id="city-input">
+    </header>
     <div id="forecast">
         
     </div>
-    <div id="event-box" style="display: none">
+    <div id="event-box">
         <p id="filter">Change Date</p>
         <input type="date" name="date" id="date-filter">
         <div id="events"></div>
     </div>
-    <div id="restaurants-box" style="display: none">
+    <div id="restaurants-box">
         <p id="restaurant-filter">Search Cuisines</p>
         <select name="cuisine" id="cuisine">
             <option value="italian">Italian</option>

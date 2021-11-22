@@ -1,11 +1,10 @@
-require('dotenv').config();
 import days from './days.js';
 
 
 class Weather {
-    constructor(city = 'juneau') {
+    constructor(city) {
         this.city = city;
-        this.apiKey = process.env.WEATHER_API_KEY;
+        this.apiKey = '6ba7ddab25b8409c97d164306211811';
         this.apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${this.apiKey}&q=${this.city}&days=5&aqi=no`;
         this.forecast = document.getElementById('forecast');
         this.weatherInterval = null;

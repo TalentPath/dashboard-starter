@@ -1,8 +1,10 @@
 class Events {
-    constructor() {
+    constructor(lat, lon) {
+        this.lat = lat;
+        this.lon = lon;
         this.eventId = 'MjQ1MTgwODh8MTYzNzI2NTk4OS4wODk3ODg';
         this.clientSecret = '8fd98486b0b4659cd1af37d374d7830c1e0bd7f90f615cad937ff1210fa893a1';
-        this.eventUrl = `https://api.seatgeek.com/2/events?client_id=${this.eventId}&client_secret=${this.clientSecret}&lat=29.76&lon=-95.36&range=50mi`
+        this.eventUrl = `https://api.seatgeek.com/2/events?client_id=${this.eventId}&client_secret=${this.clientSecret}&lat=${this.lat}&lon=${this.lon}&range=50mi`
         this.events = null;
         this.eventContainer = document.getElementById('events');
     }
