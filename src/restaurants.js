@@ -28,6 +28,26 @@ class Restaurants {
                 const restaurantDiv = document.createElement('div');
                 restaurantDiv.innerHTML = `<p>${restaurant.restaurant_name} <span>${restaurant.price_range}</span></p><p>${restaurant.cuisines.join(', ')}</p>`;
                 this.restaurantContainer.appendChild(restaurantDiv);
+                restaurantDiv.addEventListener('click', (event) => {
+                    this.restaurantContainer.innerHTML = `<h2>${restaurant.restaurant_name} ${restaurant.price_range}</h2>
+                    <p>${restaurant.cuisines.join(',')}</p>
+                    <a href=${restaurant.restaurant_website} target="_blank" >Website</a>
+                    <a href="tel:${restaurant.restaurant_phone}" target="_blank" >Phone</a>
+                    <p>${restaurant.address.formatted}<p>
+                    <p id="restaurant-directions">Click Here for Directions</p>`;
+
+                    const restaurantDirections = document.getElementById('restaurant-directions');
+                    restaurantDirections.addEventListener('click', (event) => {
+                        const directions = document.getElementById('directions');
+                        directions.style.visibility = 'visible';
+                        const toAddress = document.getElementById('toAddress');
+                        const toCity = document.getElementById('toCity');
+                        const toState = document.getElementById('toState');
+                        toAddress.value = restaurant.address.street;
+                        toCity.value = restaurant.address.city;
+                        toState.value = restaurant.address.state;
+                    })
+                })
             }
         })
     }

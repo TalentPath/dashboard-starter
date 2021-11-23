@@ -69,6 +69,8 @@ class Map {
             const from = `${data.fromAddress.split(' ').join('+')},${data.fromCity},${data.fromState}`;
             const to = `${data.toAddress.split(' ').join('+')},${data.toCity},${data.toState}`;
             const directionBox = document.getElementById('direction-box');
+            event.target.style.visibility = 'hidden';
+
             fetch(`http://www.mapquestapi.com/directions/v2/route?key=${this.mapKey}&from=${from}&to=${to}`)
                 .then(response => response.json())
                 .then(response => {
@@ -76,12 +78,14 @@ class Map {
                     const map = document.getElementById('map');
                     response.route.legs[0].maneuvers.forEach((maneuver, i) => {
                         const current = document.createElement('div');
-                        const text = document.createElement('p');
+                        const text = document.createElement('span');
+                        const lineBreak = document.createElement('br');
                         const image = document.createElement('img');
                         image.setAttribute('src', maneuver.iconUrl);
                         text.innerHTML = `${maneuver.narrative} - ${maneuver.distance.toFixed(1)} miles`;
                         current.appendChild(image);
                         current.appendChild(text);
+                        current.appendChild(lineBreak);
                         if (i !== response.route.legs[0].maneuvers.length - 1) {
                             const mapFull = document.createElement('img');
                             mapFull.setAttribute('src', maneuver.mapUrl);

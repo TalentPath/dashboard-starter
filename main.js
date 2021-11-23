@@ -43,9 +43,10 @@ class Main {
         const changeForm = document.getElementById('change-form');
         const change = document.getElementById('change');
         const cityInput = document.getElementById('city-input');
+        const reload = document.getElementById('reload');
 
-        window.addEventListener('storage', (event) => {
-            console.log('worked');
+        reload.addEventListener('click', (event) => {
+            this.render();
         })
         change.addEventListener('click', (event) => {
             changeForm.style.visibility = 'visible';

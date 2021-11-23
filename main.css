@@ -43,3 +43,7 @@
 #back {
     display: none;
 }
+
+#directions {
+    visibility: hidden;
+}
