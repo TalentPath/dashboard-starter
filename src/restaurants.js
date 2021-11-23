@@ -27,7 +27,7 @@ class Restaurants {
         this.restaurants.forEach((restaurant, i) => {
             if (i >= this.index && i < this.index + 5) {
                 const restaurantDiv = document.createElement('div');
-                restaurantDiv.innerHTML = `<p>${restaurant.restaurant_name} <span>${restaurant.price_range}</span></p><p>${restaurant.cuisines.join(', ')}</p>`;
+                restaurantDiv.innerHTML = `<p>${restaurant.restaurant_name} <span>${restaurant.price_range}</span></p>`;
                 this.restaurantContainer.appendChild(restaurantDiv);
                 restaurantDiv.addEventListener('click', (event) => {
                     this.restaurantContainer.innerHTML = `<h2>${restaurant.restaurant_name} ${restaurant.price_range}</h2>
