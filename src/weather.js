@@ -66,10 +66,12 @@ class Weather {
         currentTemp.innerHTML = `Temp: ${Math.floor(day.day.maxtemp_f)}&deg; F`;
         currentWind.innerHTML = `Wind: ${Math.floor(day.day.maxwind_mph)} mph`;
         current.setAttribute('id', index);
+        current.setAttribute('class', 'active');
         currentImage.setAttribute('id', index);
         currentDate.setAttribute('id', index);
         currentTemp.setAttribute('id', index);
         currentWind.setAttribute('id', index);
+        currentImage.setAttribute('class', 'icon');
         current.appendChild(expand);
         current.appendChild(currentImage);
         current.appendChild(currentDate);
@@ -80,16 +82,16 @@ class Weather {
             clearInterval(this.weatherInterval);
             const currentDay = response.forecast.forecastday[event.target.id];
             console.log(currentDay);
-            this.forecast.innerHTML = `<img src=${currentDay.day.condition.icon}>
+            this.forecast.innerHTML = `<img src=${currentDay.day.condition.icon} class="icon">
             <p>${index === 0 ? 'Today' : `${days[new Date(currentDay.date).getUTCDay()]} ${new Date(currentDay.date).getUTCMonth() + 1}/${new Date(currentDay.date).getUTCDate()}`}</p>
-            <p>High: ${currentDay.day.maxtemp_f}&deg; F</p>
-            <p>Low: ${currentDay.day.mintemp_f}&deg; F</p>
-            <p>Wind: ${currentDay.day.maxwind_mph} mph</p>
+            <p>High: ${Math.floor(currentDay.day.maxtemp_f)}&deg; F</p>
+            <p>Low: ${Math.floor(currentDay.day.mintemp_f)}&deg; F</p>
+            <p>Wind: ${Math.floor(currentDay.day.maxwind_mph)} mph</p>
             <p>Chance of Rain: ${currentDay.day.daily_chance_of_rain}%</p>
             <p>Chance of Snow: ${currentDay.day.daily_chance_of_snow}%</p>
-            <p id="hourly">See Hourly Forecast</p>
+            <p id="hourly" class="active">See Hourly Forecast</p>
             <div id="hourly-box"></div>
-            <p id="weather-close">Close</p>`;
+            <p id="weather-close" class="active">Close</p>`;
 
             const weatherClose = document.getElementById('weather-close');
             const hourlyBox = document.getElementById('hourly-box');
@@ -104,8 +106,9 @@ class Weather {
                             : timeSplit[0] === '12' ? '12:00PM'
                             : `${Number(timeSplit[0])}:00AM`;
                         
-                        hourlyBox.innerHTML += `<span>${time}</p>
-                        <img src=${hourData.condition.icon}>`
+                        hourlyBox.innerHTML += `<div><p>${time}</p>
+                        <img src=${hourData.condition.icon} class="icon">
+                        <p>${Math.floor(hourData.temp_f)}&deg; F</p><br></div>`
                         hourly.innerHTML = 'Hide Hourly Forecast';
                     })
                 } else {
@@ -131,7 +134,7 @@ class Weather {
             this.startInterval();
         }
 
-        back.innerHTML = 'Back to 1-day';
+        back.innerHTML = 'Back to 1-day forecast';
         back.addEventListener('click', backListener)
         this.forecast.appendChild(back);
         this.weatherInfo.forecast.forecastday.forEach((day, i) => {
@@ -142,6 +145,7 @@ class Weather {
             const currentWind = document.createElement('p');
 
             currentImage.setAttribute('src', day.day.condition.icon);
+            currentImage.setAttribute('class', 'icon');
             currentDate.innerHTML = i === 0 ? 'Today' : days[new Date(day.date).getUTCDay()];
             currentTemp.innerHTML = `${Math.floor(day.day.maxtemp_f)}&deg; F`;
             currentWind.innerHTML = `Wind: ${Math.floor(day.day.maxwind_mph)} mph`;

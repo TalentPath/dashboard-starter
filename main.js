@@ -12,6 +12,8 @@ class Main {
         this.events = new Events(this.lat, this.lon);
         this.restaurants = new Restaurants(this.lat, this.lon);
         this.map = new Map(this.lat, this.lon);
+        this.pageTimer = null;
+        this.timerIndex = 0;
     }
 
     setLatLon(lat, lon) {
@@ -36,6 +38,13 @@ class Main {
     }
 
     render() {
+        this.pageTimer = setInterval(() => {
+            this.timerIndex++;
+            if (this.timerIndex === 300) {
+                clearInterval(this.pageTimer);
+                this.render();
+            }
+        }, 1000);
         this.weather.render();
         this.events.render();
         this.restaurants.render();
@@ -64,14 +73,3 @@ class Main {
 const main = new Main();
 main.render();
 
-// const weather = new Weather();
-// weather.render();
-
-// const events = new Events();
-// events.render();
-
-// const restaurants = new Restaurants();
-// restaurants.render();
-
-// const map = new Map();
-// map.render();
