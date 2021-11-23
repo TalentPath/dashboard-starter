@@ -5,6 +5,10 @@
     margin: 0;
 }
 
+#forecast {
+    background-color: rgb(25, 124, 211);
+}
+
 #date-filter {
     visibility: hidden;
 }

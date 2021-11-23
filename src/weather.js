@@ -53,11 +53,14 @@ class Weather {
         const currentTemp = document.createElement('p');
         const currentWind = document.createElement('p');
 
+        const expandListener = (event) => {
+            this.expandWeather();
+        }
+
+        expand.removeEventListener('click', expandListener);
         expand.setAttribute('id', 'expand');
         expand.innerHTML = 'See 5-day forecast';
-        expand.addEventListener('click', (event) => {
-            this.expandWeather();
-        })
+        expand.addEventListener('click', expandListener);
         currentImage.setAttribute('src', day.day.condition.icon);
         currentDate.innerHTML = index === 0 ? 'Today' : days[new Date(day.date).getUTCDay()];
         currentTemp.innerHTML = `${Math.floor(day.day.maxtemp_f)}&deg; F`;
@@ -74,13 +77,14 @@ class Weather {
         clearInterval(this.weatherInterval);
         this.forecast.innerHTML = '';
         const back = document.createElement('p');
-        back.setAttribute('id', 'back');
-        back.innerHTML = 'Back to 1-day';
-        back.addEventListener('click', (event) => {
+        const backListener = (event) => {
             this.currentIndex = 0;
             this.setWeather(this.weatherInfo, this.currentIndex);
             this.startInterval();
-        })
+        }
+
+        back.innerHTML = 'Back to 1-day';
+        back.addEventListener('click', backListener)
         this.forecast.appendChild(back);
         this.weatherInfo.forecast.forecastday.forEach((day, i) => {
             const current = document.createElement('div');

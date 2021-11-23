@@ -12,6 +12,7 @@ class Restaurants {
 
 
     getRestaurants(url = this.restaurantUrl) {
+        this.restaurantContainer.innerHTML = '';
         fetch(url) 
             .then((response) => response.json())
             .then((response) => {
@@ -34,8 +35,13 @@ class Restaurants {
                     <a href=${restaurant.restaurant_website} target="_blank" >Website</a>
                     <a href="tel:${restaurant.restaurant_phone}" target="_blank" >Phone</a>
                     <p>${restaurant.address.formatted}<p>
-                    <p id="restaurant-directions">Click Here for Directions</p>`;
+                    <p id="restaurant-directions">Click Here for Directions</p>
+                    <p id="close">Close<p>`;
 
+                    const close = document.getElementById('close');
+                    close.addEventListener('click', (event) => {
+                        this.displayResults();
+                    })
                     const restaurantDirections = document.getElementById('restaurant-directions');
                     restaurantDirections.addEventListener('click', (event) => {
                         const directions = document.getElementById('directions');
@@ -53,12 +59,14 @@ class Restaurants {
     }
 
     render() {
+        this.index = 0;
         this.page = 1;
         this.getRestaurants(this.restaurantUrl);
         const restaurantFilter = document.getElementById('restaurant-filter');
         const cuisine = document.getElementById('cuisine');
         const forward = document.getElementById('forward');
         const back = document.getElementById('back');
+        back.style.display = 'none';
         restaurantFilter.addEventListener('click', (event) => {
             cuisine.style.visibility === 'visible' ? cuisine.style.visibility = 'hidden' : cuisine.style.visibility = 'visible';
         })
