@@ -23,6 +23,16 @@ class Weather {
                 const cityName = document.getElementById('city');
                 cityName.innerHTML = `${response.location.name}, ${response.location.region}`;
                 this.weatherInfo = response;
+                this.city = city;
+                const data = [];
+                
+                response.forecast.forecastday.forEach(day => {
+                    day.hour.forEach(hour => {
+                        data.push({y: hour.temp_f, label: hour.time});
+                    })
+                })
+
+                this.generateChart(data);
                 
                 this.setWeather(this.weatherInfo, this.currentIndex);
                 this.startInterval();
@@ -44,6 +54,7 @@ class Weather {
     
 
     setWeather(response, index) {
+        clearInterval(this.weatherInterval);
         this.forecast.innerHTML = '';
         const day = response.forecast.forecastday[index];
         const current = document.createElement('div');
@@ -60,6 +71,7 @@ class Weather {
             } else {
                 this.currentIndex = 0;
                 this.setWeather(this.weatherInfo, this.currentIndex);
+                this.startInterval();
                 expand.innerHTML = 'See 5-day forecast';
             }
         }
@@ -76,7 +88,6 @@ class Weather {
         currentTemp.setAttribute('id', index);
         currentWind.setAttribute('id', index);
         currentImage.setAttribute('class', 'icon');
-        // current.appendChild(expand);
         current.appendChild(currentImage);
         current.appendChild(currentDate);
         current.appendChild(currentTemp);
@@ -97,14 +108,10 @@ class Weather {
             <div id="hourly-box"></div>
             <p id="weather-close" class="active">Close</p>`;
 
-            const weatherRefresh = document.getElementById('weather-refresh');
+            
             const weatherClose = document.getElementById('weather-close');
             const hourlyBox = document.getElementById('hourly-box');
             const hourly = document.getElementById('hourly');
-
-            weatherRefresh.addEventListener('click', (event) => {
-                this.setWeather(this.weatherInfo, this.currentIndex);
-            })
 
             hourly.addEventListener('click', (event) => {
                 if (hourly.innerHTML === 'See Hourly Forecast') {
@@ -155,14 +162,56 @@ class Weather {
             this.forecast.appendChild(current);
         })
     }
+
+    generateChart (data) {
+        // code incorporated from https://canvasjs.com/html5-javascript-column-chart/
+        const chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light1",
+            title:{
+                text: "Hourly Temperatures"
+            },
+            axisY: {
+                title: "Temp(F)"
+            },
+            data: [{        
+                type: "column",  
+                showInLegend: true, 
+                legendMarkerColor: "grey",
+                legendText: "Hourly Temps",
+                dataPoints: data
+            }]
+        });
+        chart.render();
+    }
     
     render() {
+        this.currentIndex = 0;
         this.forecast.innerHTML = '';
         fetch(this.apiUrl)
             .then(response => response.json())
             .then(response => {
                 console.log(response);
                 const cityName = document.getElementById('city');
+                const weatherRefresh = document.getElementById('weather-refresh');
+                const data = [];
+                
+                response.forecast.forecastday.forEach(day => {
+                    day.hour.forEach(hour => {
+                        data.push({y: hour.temp_f, label: hour.time});
+                    })
+                })
+                this.generateChart(data);
+                
+                const refreshListener = (event) => {
+                    clearInterval(this.weatherInterval);
+                    weatherRefresh.removeEventListener('click', refreshListener);
+                    this.render();
+                }
+
+                
+                
+                weatherRefresh.addEventListener('click', refreshListener);
                 cityName.innerHTML = `${response.location.name}, ${response.location.region}`;
                 this.weatherInfo = response;
                 

@@ -70,34 +70,36 @@ class Restaurants {
         const cuisine = document.getElementById('cuisine');
         const forward = document.getElementById('forward');
         const back = document.getElementById('back');
-        back.style.display = 'none';
+        back.style.visibility = 'hidden';
         restaurantFilter.addEventListener('click', (event) => {
             cuisine.style.visibility === 'visible' ? cuisine.style.visibility = 'hidden' : cuisine.style.visibility = 'visible';
         })
         cuisine.addEventListener('change', (event) => {
             const filteredUrl = `https://api.documenu.com/v2/restaurants/search/geo?key=${this.restaurantKey}&lat=${localStorage.lat}&lon=${localStorage.lon}&distance=20&cuisine=${event.target.value}`;
             console.log(filteredUrl);
+            this.index = 0;
+            back.style.visibility = 'hidden';
             this.restaurantContainer.innerHTML = '';
             this.getRestaurants(filteredUrl);
             cuisine.style.visibility = 'hidden';
         })
         forward.addEventListener('click', (event) => {
             if (this.index === 0) {
-                back.style.display = 'contents';
+                back.style.visibility = 'visible';
             }
             this.index += 5;
             if (this.index + 5 >= this.restaurants.length) {
-                forward.style.display = 'none';
+                forward.style.visibility = 'hidden';
             }
             this.displayResults();
         })
         back.addEventListener('click', (event) => {
             if (this.index + 5 >= this.restaurants.length) {
-                forward.style.display = 'contents';
+                forward.style.visibility = 'visible';
             }
             this.index -= 5;
             if (this.index === 0) {
-                back.style.display = 'none';
+                back.style.visibility = 'hidden';
             }
             this.displayResults();
         })

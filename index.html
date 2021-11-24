@@ -8,9 +8,9 @@
     <link rel="icon" 
       type="image/png" 
       href="city.png">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Genos:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=M+PLUS+1+Code:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
@@ -85,7 +85,8 @@
                 </select>
                 <button type="submit" class="active">Set New City</button>
             </form>
-            <p id="expand">See 5-day forcast</p>
+            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            <p id="expand" class="active">See 5-day forcast</p>
             <div id="forecast">
                 
             </div>
@@ -258,6 +259,7 @@
             </section>
         </div>
     </main>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="../node_modules/axios/dist/axios.min.js"></script>
     <script src="main.js" type="module"></script>
 </body>

@@ -6,7 +6,7 @@
 }
 
 html {
-    font-family: 'Genos', sans-serif;
+    font-family: 'M PLUS 1 Code', sans-serif;
 }
 
 body {
@@ -15,6 +15,10 @@ body {
 
 .active {
     cursor: pointer;
+}
+
+.active:hover {
+    opacity: .5;
 }
 
 header {
@@ -75,6 +79,10 @@ main {
     justify-content: space-between;
 }
 
+#chartContainer {
+    margin-bottom: 20px;
+}
+
 .panel {
     margin: 20px;
     box-shadow: 2px 2px 10px rgb(25, 124, 211);
@@ -111,6 +119,11 @@ main {
 #event-box {
     height: 40%;
     overflow-y: scroll;
+}
+
+.event:hover {
+    background-color: darkgray!important;
+    color: white!important;
 }
 
 #events div:nth-child(2n + 1) {
@@ -155,6 +168,14 @@ main {
     visibility: hidden;
 }
 
+.restaurant {
+    opacity: .5;
+}
+
+.restaurant:hover {
+    opacity: 1;
+}
+
 #restaurants-box {
     height: 40vh;
 }
@@ -170,7 +191,7 @@ main {
 }
 
 #back {
-    display: none;
+    visibility: hidden;
 }
 
 #directions {
