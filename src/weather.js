@@ -194,12 +194,7 @@ class Weather {
                 })
                 this.generateChart(data);
                 
-                const refreshListener = (event) => {
-                    clearInterval(this.weatherInterval);
-                    weatherRefresh.removeEventListener('click', refreshListener);
-                    this.render();
-                }
-
+                
                 const expand = document.getElementById('expand');
                 const contract = document.getElementById('contract');
                 const expandListener = (event) => {
@@ -216,7 +211,14 @@ class Weather {
                     this.setWeather(this.weatherInfo, this.currentIndex);
                     this.startInterval();
                 }
-        
+                
+                const refreshListener = (event) => {
+                    expand.removeEventListener('click', expandListener);
+                    contract.removeEventListener('click', contractListener);
+                    clearInterval(this.weatherInterval);
+                    weatherRefresh.removeEventListener('click', refreshListener);
+                    this.render();
+                }
         
                 expand.addEventListener('click', expandListener);
                 contract.addEventListener('click', contractListener);
