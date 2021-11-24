@@ -12,7 +12,7 @@ class Restaurants {
 
 
     getRestaurants(url = this.restaurantUrl) {
-        this.restaurantContainer.innerHTML = '';
+        this.restaurantContainer.innerHTML = 'Loading...';
         fetch(url) 
             .then((response) => response.json())
             .then((response) => {
@@ -27,7 +27,7 @@ class Restaurants {
         this.restaurants.forEach((restaurant, i) => {
             if (i >= this.index && i < this.index + 5) {
                 const restaurantDiv = document.createElement('div');
-                restaurantDiv.setAttribute('class', 'active');
+                restaurantDiv.setAttribute('class', 'restaurant active');
                 restaurantDiv.innerHTML = `<p>${restaurant.restaurant_name} <span>${restaurant.price_range}</span></p>`;
                 this.restaurantContainer.appendChild(restaurantDiv);
                 restaurantDiv.addEventListener('click', (event) => {
@@ -44,9 +44,12 @@ class Restaurants {
                         this.displayResults();
                     })
                     const restaurantDirections = document.getElementById('restaurant-directions');
+                    
                     restaurantDirections.addEventListener('click', (event) => {
                         const directions = document.getElementById('directions');
+                        const getDirections = document.getElementById('get-directions');
                         directions.style.visibility = 'visible';
+                        getDirections.innerHTML = 'Hide Directions';
                         const toAddress = document.getElementById('toAddress');
                         const toCity = document.getElementById('toCity');
                         const toState = document.getElementById('toState');

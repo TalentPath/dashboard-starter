@@ -40,7 +40,25 @@ class Map {
         const minus = document.getElementById('minus');
         const traffic = document.getElementById('traffic');
         const directions = document.getElementById('directions');
+        const getDirections = document.getElementById('get-directions');
+        const directionBox = document.getElementById('direction-box');
+        const fromAddress = document.getElementById('from-address');
+        const fromCity = document.getElementById('from-city');
+        const fromState = document.getElementById('from-state');
 
+        getDirections.addEventListener('click', (event) => {
+            if (getDirections.innerHTML === 'Get Directions') {
+                directions.style.visibility = 'visible';
+                getDirections.innerHTML = 'Hide Directions';
+                fromAddress.setAttribute('value', localStorage.address);
+                fromCity.setAttribute('value', localStorage.city);
+                fromState.setAttribute('value', localStorage.state);
+            } else {
+                directionBox.innerHTML = '';
+                getDirections.innerHTML = 'Get Directions';
+                directions.style.visibility = 'hidden';
+            }
+        })
         plus.addEventListener('click', (event) => {
             this.zoomIn();
         })
@@ -50,6 +68,7 @@ class Map {
         traffic.addEventListener('click', (event) => {
             event.preventDefault();
 
+            console.log('click');
             if (event.target.innerHTML === 'See Traffic') {
                 event.target.innerHTML = 'Hide Traffic';
                 const currentUrl = `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${this.lat},${this.lon}&zoom=${this.zoom}&traffic=flow`;
@@ -68,7 +87,6 @@ class Map {
             const data = Object.fromEntries(formData);
             const from = `${data.fromAddress.split(' ').join('+')},${data.fromCity},${data.fromState}`;
             const to = `${data.toAddress.split(' ').join('+')},${data.toCity},${data.toState}`;
-            const directionBox = document.getElementById('direction-box');
             event.target.style.visibility = 'hidden';
 
             fetch(`http://www.mapquestapi.com/directions/v2/route?key=${this.mapKey}&from=${from}&to=${to}`)

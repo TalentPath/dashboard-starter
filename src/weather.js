@@ -29,7 +29,7 @@ class Weather {
                 
                 cityName.removeAttribute('style');
                 cityName.style.visibility = 'visible';
-                localStorage.city = `${response.location.name}, ${response.location.region}`;
+                localStorage.cityName = `${response.location.name}, ${response.location.region}`;
                 localStorage.lat = response.location.lat;
                 localStorage.lon = response.location.lon;
             })
@@ -47,19 +47,23 @@ class Weather {
         this.forecast.innerHTML = '';
         const day = response.forecast.forecastday[index];
         const current = document.createElement('div');
-        const expand = document.createElement('p');
+        const expand = document.getElementById('expand');
         const currentImage = document.createElement('img');
         const currentDate = document.createElement('p');
         const currentTemp = document.createElement('p');
         const currentWind = document.createElement('p');
 
         const expandListener = (event) => {
-            this.expandWeather();
+            if (expand.innerHTML === 'See 5-day forecast') {
+                this.expandWeather();
+                expand.innerHTML = 'Back to 1-day forecast';
+            } else {
+                this.currentIndex = 0;
+                this.setWeather(this.weatherInfo, this.currentIndex);
+                expand.innerHTML = 'See 5-day forecast';
+            }
         }
-
-        expand.removeEventListener('click', expandListener);
-        expand.setAttribute('id', 'expand');
-        expand.innerHTML = 'See 5-day forecast';
+    
         expand.addEventListener('click', expandListener);
         currentImage.setAttribute('src', day.day.condition.icon);
         currentDate.innerHTML = index === 0 ? 'Today' : `${days[new Date(day.date).getUTCDay()]} ${new Date(day.date).getUTCMonth() + 1}/${new Date(day.date).getUTCDate()}`;
@@ -72,7 +76,7 @@ class Weather {
         currentTemp.setAttribute('id', index);
         currentWind.setAttribute('id', index);
         currentImage.setAttribute('class', 'icon');
-        current.appendChild(expand);
+        // current.appendChild(expand);
         current.appendChild(currentImage);
         current.appendChild(currentDate);
         current.appendChild(currentTemp);
@@ -81,9 +85,9 @@ class Weather {
         current.addEventListener('click', (event) => {
             clearInterval(this.weatherInterval);
             const currentDay = response.forecast.forecastday[event.target.id];
-            console.log(currentDay);
+            console.log(event.target.id);
             this.forecast.innerHTML = `<img src=${currentDay.day.condition.icon} class="icon">
-            <p>${index === 0 ? 'Today' : `${days[new Date(currentDay.date).getUTCDay()]} ${new Date(currentDay.date).getUTCMonth() + 1}/${new Date(currentDay.date).getUTCDate()}`}</p>
+            <p>${event.target.id === 0 ? 'Today' : `${days[new Date(currentDay.date).getUTCDay()]} ${new Date(currentDay.date).getUTCMonth() + 1}/${new Date(currentDay.date).getUTCDate()}`}</p>
             <p>High: ${Math.floor(currentDay.day.maxtemp_f)}&deg; F</p>
             <p>Low: ${Math.floor(currentDay.day.mintemp_f)}&deg; F</p>
             <p>Wind: ${Math.floor(currentDay.day.maxwind_mph)} mph</p>
@@ -93,9 +97,14 @@ class Weather {
             <div id="hourly-box"></div>
             <p id="weather-close" class="active">Close</p>`;
 
+            const weatherRefresh = document.getElementById('weather-refresh');
             const weatherClose = document.getElementById('weather-close');
             const hourlyBox = document.getElementById('hourly-box');
             const hourly = document.getElementById('hourly');
+
+            weatherRefresh.addEventListener('click', (event) => {
+                this.setWeather(this.weatherInfo, this.currentIndex);
+            })
 
             hourly.addEventListener('click', (event) => {
                 if (hourly.innerHTML === 'See Hourly Forecast') {
@@ -127,16 +136,6 @@ class Weather {
     expandWeather() {
         clearInterval(this.weatherInterval);
         this.forecast.innerHTML = '';
-        const back = document.createElement('p');
-        const backListener = (event) => {
-            this.currentIndex = 0;
-            this.setWeather(this.weatherInfo, this.currentIndex);
-            this.startInterval();
-        }
-
-        back.innerHTML = 'Back to 1-day forecast';
-        back.addEventListener('click', backListener)
-        this.forecast.appendChild(back);
         this.weatherInfo.forecast.forecastday.forEach((day, i) => {
             const current = document.createElement('div');
             const currentImage = document.createElement('img');

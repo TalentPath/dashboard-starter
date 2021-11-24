@@ -51,7 +51,6 @@ class Main {
         this.map.render();
         const changeForm = document.getElementById('change-form');
         const change = document.getElementById('change');
-        const cityInput = document.getElementById('city-input');
         const reload = document.getElementById('reload');
 
         reload.addEventListener('click', (event) => {
@@ -63,9 +62,16 @@ class Main {
         changeForm.addEventListener('submit', (event) => {
             event.preventDefault();
 
-            this.city = cityInput.value;
-            console.log(cityInput.value);
-            this.setCity(cityInput.value);
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            const dataString = Object.values(data).map(item => item.split(' ').join('')).join(',');
+            this.city = data.city;
+            localStorage.address = data.address;
+            localStorage.city = data.city;
+            localStorage.state = data.state;
+            console.log(dataString);
+            this.setCity(dataString);
+            changeForm.style.visibility = 'hidden';
         })
     }
 }
