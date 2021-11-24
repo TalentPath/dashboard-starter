@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Dashboard</title>
-    
+    <title>My Personal Cookbook</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto+Slab&display=swap" rel="stylesheet">
@@ -16,59 +16,65 @@
 <body>
     <div class="container">
         <header id="header" class="header">
-            <h1>Personal Meal-Prepper</h1>
+            <h1>Personal Cookbook</h1>
         </header>
         <div class="grid">
             <div id="sidebar" class="sidebar">
-                <div id="sidebartext" class="sidebartext">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </div>
-
-                <div id="favmealslist" class="favemealslist">
-                    <div id="favelistview">
-                        <form class="form2">
-                            <div class="form-group">
-                                <label for="favmeals" class="form-check-label">Add your favorite Meal or Cocktail
-                                    Recipies!</label>
-                                <input type="text" class="form-control" id="favmeals" placeholder="" required>
+                <div class="sidebarcontent">
+                    <div id="sidebartext" class="sidebartext">
+                        <h3>Cookbook;</h3>
+                        (noun);<br>
+                        a book containing recipes and other information about the preparation and cooking of food.
+                    </div><br><br>
+                    <div id="favmealslist" class="favemealslist">
+                        <div id="favelistview">
+                            <form class="form2">
+                                <div class="form-group">
+                                    <label for="favmeals" class="form-check-label">Add your favorite Meal or Cocktail
+                                        Recipies!</label>
+                                    <div class="searchinput"><input type="text" class="form-control" id="favmeals"
+                                            placeholder="" required>
+                                        <button type="submit" class="btn add">Add</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div>
+                                <div class="title"> Favorite Meals/Cocktails:</div>
+                                <ul id="favmealss">       
+                                </ul>
                             </div>
-                            <button type="submit" class="btn btn-primary">Add</button>
-                        </form>
-                        <div>
-                            <div class="title"> To Dos</div>
-                            <ul id="favmealss">
-                                <li>Burgers</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
+                
             </div>
             <main>
                 <div id="card-grid" class="card-grid">
                     <div class="pane pane1">
                         <div class="search-div">
                             <label for="meal-search">Search for Meal Recipes</label>
-                            <input type="search" name="" id="meal-search" required>
-                            <input type="submit" id="meal-searchbtn">
+                            <div class="searchinput">
+                                <input type="search" name="" id="meal-search" required>
+                                <button type="submit" id="meal-searchbtn" required>Search</button>
+                            </div>
                         </div>
                         <div id="mealsearchresults" class="mealsearchresults"></div>
                     </div>
                     <div class="pane pane2">
                         <div class="search-div">
                             <label for="cocktail-search">Search for Cocktail Recipes</label>
-                            <input type="search" name="" id="cocktail-search">
-                            <input type="submit" id="cocktail-searchbtn" required>
+                            <div class="searchinput"><input type="search" name="" id="cocktail-search">
+                                <button type="submit" id="cocktail-searchbtn" required>Search</button>
+                            </div>
                         </div>
                         <div id="cocktailsearchresults" class="cocktailsearchresults"></div>
                     </div>
                     <div class="pane pane4">
                         <div class="search-div">
                             <label for="nutrition-search">Search for Nutritional Value</label>
-                            <input type="search" name="" id="nutrition-search" required>
-                            <input type="submit" id="nutrition-searchbtn">
+                            <div class="searchinput"><input type="search" name="" id="nutrition-search" required>
+                                <button type="submit" id="nutrition-searchbtn" required>Search</button>
+                            </div>
                         </div>
                         <div id="nutritionsearchresults" class="nutritionsearchresults"></div>
                     </div>
@@ -76,35 +82,60 @@
                         <div id="tododo">
                             <form class="form">
                                 <div class="form-group">
-                                    <label for="todo" class="form-check-label">What do you need buy for the week?</label>
-                                    <input type="text" class="form-control" id="todo" placeholder="" required>
-                                    <button type="submit" class="btn btn-primary">Add</button>
+                                    <label for="todo" class="form-check-label">What do you need buy for the
+                                        week?</label>
+                                    <div class="searchinput"><input type="text" class="form-control" id="todo"
+                                            placeholder="" required>
+                                        <button type="submit" class="btn add">Add</button>
+                                    </div>
                                 </div>
-                                
                             </form>
                             <div>
                                 <div class="title">Need to Buy:</div>
                                 <ul id="todos">
-                                    <li>I need to do something!</li>
+                                    
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="pane pane5">
-                        Need inspiration?
-                        <img src="https://foodish-api.herokuapp.com/images/dosa/dosa61.jpg" alt="" style="width: 100%;">
+                        <h3 class="mealtitle">Need Inspiration?</h3>
+                        <img src="https://foodish-api.herokuapp.com/images/dosa/dosa61.jpg" alt="" style="width: 95%; max-height: 350px;">
                     </div>
                     <div class="pane pane6">
                         <!-- <div class="calendar">
                             <iframe src="https://calendar.google.com/calendar/embed?height=200&wkst=1&bgcolor=%23ffffff&ctz=America%2FChicago&mode=MONTH&src=cGFyYWRham9zaEB5YWhvby5jb20&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%237986CB&color=%2333B679&color=%237986CB" style="border:solid 1px #777" width="300" height="300" frameborder="0" scrolling="no"></iframe>                        </div>
                     </div> -->
+                    <form id="f1form" class="f1form">
+                        <label for="f1year">&#127937; F1 Standings! &#127950;</label><br><br>
+                        <label for="f1year">Choose a year:</label><br>
+                        <select id="f1year" name="f1year">
+                          <option value="Current">Current</option>
+                          <option value="2020">2020</option>
+                          <option value="2019">2019</option>
+                          <option value="2018">2018</option>
+                          <option value="2017">2017</option>
+                          <option value="2016">2016</option>
+                          <option value="2015">2015</option>
+                          <option value="2014">2014</option>
+                          <option value="2013">2013</option>
+                          <option value="2012">2012</option>
+                          <option value="2012">2011</option>
+                          <option value="2010">2010</option>
+                          <option value="2009">2009</option>
+                        </select>
+                        <button type="submit" id="f1yearbtn">Go!</button>
+                      </form>
+                      <div id="f1results" class="f1results">
+                        <canvas id="myChart" style="width:100%;max-width:300px"></canvas>
+                      </div>
                     </div>
 
                 </div>
             </main>
         </div>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="main.js" type="module"></script>
 </body>
 

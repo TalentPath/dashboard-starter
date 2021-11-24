@@ -8,7 +8,7 @@ class CocktailRecipes{
        
     }
 
-    getFetch(search){
+    getFetch(){
         return fetch(this.url)
     }
 
@@ -27,24 +27,53 @@ class CocktailRecipes{
                 let data = await resp.json();
                 console.log(data);
 
-                if(data.drinks === null){
-                    alert(`No results available for ${searchValue}. Please try another keyword.`)
+                if(searchValue === ''){
+                    alert("Please enter a keyword.")
+                }else{
+                    if(data.drinks === null){
+                        alert(`No results available for ${searchValue}. Please try another keyword.`);
+                        document.getElementById("cocktail-search").value = '';
+                        this.url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+                    }
+    
+                    let randomInt = Math.floor(Math.random() * data.drinks.length);
+    
+                    let strDrink = data.drinks[randomInt].strDrink;
+                    let strInstructions = data.drinks[randomInt].strInstructions;
+                    let strThumb = data.drinks[randomInt].strDrinkThumb;
+                    //console.log(data.drinks[randomInt].strDrink);
+    
+                    cocktailContent = `
+                    <div class="row">
+                        <div class="column cocktailinfo">
+                            <h3 class="mealtitle">${strDrink}</h3>
+                            <p>Instructions: ${strInstructions}</p><br>
+                            
+                        </div>
+                        <div class="column cocktailimg">
+                            <img src ="${strThumb}" alt = "" style="width: 90%">
+                            <button class="addCocktail">Add to Favorites</button>
+                        </div>
+                    </div>
+                    `
+                    this.cocktailPane.innerHTML = cocktailContent;
+                    document.getElementById("cocktail-search").value = '';
+                    this.url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
+
+                    const favmealsUl = document.querySelector('#favmealss');
+                    document.body.addEventListener('click', event => {
+                        // console.log(event);
+                        // console.log(event.target);
+
+                        if (event.target.className === 'addCocktail') {
+                            event.preventDefault();
+                            //let favmeal = document.querySelector('#favmeals').value;
+                            let favmealLi = document.createElement('li');
+                            favmealLi.innerHTML = `${strDrink} <p></p><button class="delete">Remove</button>`;
+                            favmealsUl.appendChild(favmealLi);
+                        }
+                    })
                 }
-
-                let randomInt = Math.floor(Math.random() * data.drinks.length);
-
-                let strDrink = data.drinks[randomInt].strDrink;
-                let strInstructions = data.drinks[randomInt].strInstructions;
-                let strThumb = data.drinks[randomInt].strDrinkThumb;
-                //console.log(data.drinks[randomInt].strDrink);
-
-                cocktailContent = `
-                <h3>${strDrink}</h3>
-                <p>Instructions: ${strInstructions}</p><br>
-                <img src ="${strThumb}" alt = "" style="width: 50%">
-                `
-
-                this.cocktailPane.innerHTML = cocktailContent;
             })
         })
     }

@@ -1,12 +1,10 @@
 class ToDoList {
 
-    //toDoListPane = document.querySelector('.pane3');
     constructor(){}
 
     render() {
         let toDoListForm = document.querySelector(".form");
         //console.log('todolistform', toDoListForm);
-        // Do something when form is submitted
         const todosUl = document.querySelector('#todos');
         toDoListForm.addEventListener("submit", (ev) => {
             ev.preventDefault();
