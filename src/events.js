@@ -57,7 +57,7 @@ class Events {
                         <p>${event.short_title}</p><p>${event.type.toUpperCase().split('_').join(' ')}</p><p>${event.venue.name}</p>`;
                     current.addEventListener('click', (e) => {
                         this.eventContainer.innerHTML = `<h2>${event.title}</h2>
-                        <a href=${event.url}>Get Tickets</a>
+                        <a href=${event.url} target="_blank" class="active">Get Tickets</a>
                         <p>${event.type.toUpperCase().split('_').join(' ')}</p>
                         <p>${event.venue.name}</p>
                         <p>${event.venue.address}</p>
@@ -74,9 +74,15 @@ class Events {
                             const toAddress = document.getElementById('toAddress');
                             const toCity = document.getElementById('toCity');
                             const toState = document.getElementById('toState');
+                            const fromAddress = document.getElementById('from-address');
+                            const fromCity = document.getElementById('from-city');
+                            const fromState = document.getElementById('from-state');
                             toAddress.value = event.venue.address;
                             toCity.value = event.venue.city;
                             toState.value = event.venue.state;
+                            fromAddress.value = localStorage.address;
+                            fromCity.value = localStorage.city;
+                            fromState.value = localStorage.state;
                             })
                             eventClose.addEventListener('click', (e) => {
                                 this.displayEvents();

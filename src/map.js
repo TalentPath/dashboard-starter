@@ -50,9 +50,9 @@ class Map {
             if (getDirections.innerHTML === 'Get Directions') {
                 directions.style.visibility = 'visible';
                 getDirections.innerHTML = 'Hide Directions';
-                fromAddress.setAttribute('value', localStorage.address);
-                fromCity.setAttribute('value', localStorage.city);
-                fromState.setAttribute('value', localStorage.state);
+                fromAddress.value = localStorage.address;
+                fromCity.value = localStorage.city;
+                fromState.value = localStorage.state;
             } else {
                 directionBox.innerHTML = '';
                 getDirections.innerHTML = 'Get Directions';

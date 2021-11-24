@@ -10,6 +10,7 @@ class Weather {
         this.weatherInterval = null;
         this.weatherInfo = null;
         this.currentIndex = 0;
+        this.index = 0;
     }
 
     setCity(city) {
@@ -47,36 +48,25 @@ class Weather {
 
     startInterval = () => {
         this.weatherInterval = setInterval(() => {
-            this.currentIndex = (this.currentIndex + 1) % this.weatherInfo.forecast.forecastday.length;
-            this.setWeather(this.weatherInfo, this.currentIndex);
-        }, 5000)
+            this.index++;
+            console.log(this.index);
+            if (this.index % 5 === 0) {
+                this.currentIndex = (this.currentIndex + 1) % this.weatherInfo.forecast.forecastday.length;
+                this.setWeather(this.weatherInfo, this.currentIndex);
+            }
+        }, 1000)
     }
     
 
     setWeather(response, index) {
-        clearInterval(this.weatherInterval);
         this.forecast.innerHTML = '';
         const day = response.forecast.forecastday[index];
         const current = document.createElement('div');
-        const expand = document.getElementById('expand');
         const currentImage = document.createElement('img');
         const currentDate = document.createElement('p');
         const currentTemp = document.createElement('p');
         const currentWind = document.createElement('p');
-
-        const expandListener = (event) => {
-            if (expand.innerHTML === 'See 5-day forecast') {
-                this.expandWeather();
-                expand.innerHTML = 'Back to 1-day forecast';
-            } else {
-                this.currentIndex = 0;
-                this.setWeather(this.weatherInfo, this.currentIndex);
-                this.startInterval();
-                expand.innerHTML = 'See 5-day forecast';
-            }
-        }
-    
-        expand.addEventListener('click', expandListener);
+        
         currentImage.setAttribute('src', day.day.condition.icon);
         currentDate.innerHTML = index === 0 ? 'Today' : `${days[new Date(day.date).getUTCDay()]} ${new Date(day.date).getUTCMonth() + 1}/${new Date(day.date).getUTCDate()}`;
         currentTemp.innerHTML = `Temp: ${Math.floor(day.day.maxtemp_f)}&deg; F`;
@@ -142,6 +132,7 @@ class Weather {
 
     expandWeather() {
         clearInterval(this.weatherInterval);
+        this.weatherInterval = undefined;
         this.forecast.innerHTML = '';
         this.weatherInfo.forecast.forecastday.forEach((day, i) => {
             const current = document.createElement('div');
@@ -209,6 +200,26 @@ class Weather {
                     this.render();
                 }
 
+                const expand = document.getElementById('expand');
+                const contract = document.getElementById('contract');
+                const expandListener = (event) => {
+                    clearInterval(this.weatherInterval);
+                    this.weatherInterval = undefined;
+                    event.target.innerHTML = '';
+                    this.expandWeather();
+                    contract.innerHTML = 'Back to 1-day forecast';
+                }
+                const contractListener = (event) => {
+                    this.currentIndex = 0;
+                    event.target.innerHTML = '';
+                    expand.innerHTML = 'See 5-day forecast';
+                    this.setWeather(this.weatherInfo, this.currentIndex);
+                    this.startInterval();
+                }
+        
+        
+                expand.addEventListener('click', expandListener);
+                contract.addEventListener('click', contractListener);
                 
                 
                 weatherRefresh.addEventListener('click', refreshListener);

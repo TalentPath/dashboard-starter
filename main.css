@@ -9,6 +9,10 @@ html {
     font-family: 'M PLUS 1 Code', sans-serif;
 }
 
+button {
+    font-family: 'M PLUS 1 Code', sans-serif;
+}
+
 body {
     padding: 20px;
 }
@@ -114,6 +118,8 @@ main {
 
 #date-filter {
     visibility: hidden;
+    padding: 10px;
+    margin: 5px 0;
 }
 
 #event-box {

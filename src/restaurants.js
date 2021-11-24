@@ -33,11 +33,11 @@ class Restaurants {
                 restaurantDiv.addEventListener('click', (event) => {
                     this.restaurantContainer.innerHTML = `<h2>${restaurant.restaurant_name} ${restaurant.price_range}</h2>
                     <p>${restaurant.cuisines.join(',')}</p>
-                    <a href=${restaurant.restaurant_website} target="_blank" >Website</a>
-                    <a href="tel:${restaurant.restaurant_phone}" target="_blank" >Phone</a>
+                    <a href=${restaurant.restaurant_website} target="_blank" class="active">Website</a>
+                    <a href="tel:${restaurant.restaurant_phone}" target="_blank" class="active">Phone</a>
                     <p>${restaurant.address.formatted}<p>
-                    <p id="restaurant-directions">Click Here for Directions</p>
-                    <p id="close">Close<p>`;
+                    <p id="restaurant-directions" class="active">Click Here for Directions</p>
+                    <p id="close" class="active">Close<p>`;
 
                     const close = document.getElementById('close');
                     close.addEventListener('click', (event) => {
@@ -53,9 +53,15 @@ class Restaurants {
                         const toAddress = document.getElementById('toAddress');
                         const toCity = document.getElementById('toCity');
                         const toState = document.getElementById('toState');
+                        const fromAddress = document.getElementById('from-address');
+                        const fromCity = document.getElementById('from-city');
+                        const fromState = document.getElementById('from-state');
                         toAddress.value = restaurant.address.street;
                         toCity.value = restaurant.address.city;
                         toState.value = restaurant.address.state;
+                        fromAddress.value = localStorage.address;
+                        fromCity.value = localStorage.city;
+                        fromState.value = localStorage.state;
                     })
                 })
             }
