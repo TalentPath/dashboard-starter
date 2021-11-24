@@ -42,7 +42,8 @@ main{
     margin-bottom: 20px;
     border-radius: 90px;
     font-family: 'Roboto Mono', monospace;
-}
+    border: dashed 2px #DBE2EF;
+  }
 
 .sidebar{
     background-color: #112D4E;
@@ -50,6 +51,7 @@ main{
     text-align: center;
     border-radius: 30px;
     position:relative;
+    border: dashed 2px #DBE2EF;
 }
 .sidebarcontent{
   position: fixed;
@@ -104,6 +106,7 @@ li{
     background-color: #DBE2EF;
     border-radius: 10px;
     opacity: 95%;
+    border: dashed 2px #3F72AF;
 }
 .pane3{
   align-items: flex-start;

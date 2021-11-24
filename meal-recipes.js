@@ -13,7 +13,7 @@ class MealRecipes {
     }
 
     render() {
-
+        //let favmealsarr = []
         document.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById("meal-searchbtn").addEventListener("click", async ev => {
@@ -81,6 +81,24 @@ class MealRecipes {
                             favmealsUl.appendChild(favmealLi);   
                         }
                     })
+
+                    // async function addtolist(){
+                    //     favmealsUl.innerHTML = ''
+                    //     favmealsarr.push(`<li>${strMeal} <p><a href="${strSource}" target="_blank" style="color:lightblue">Source</a><br><a href="${strYoutube}" target="_blank" style="color:lightblue">YouTube</a></p><button class="delete">Remove</button></li>`)
+                    //         let nodeDup = [...new Set(favmealsarr)];
+                    //         favmealsUl.innerHTML = nodeDup.join('')
+                    //         // console.log(favmealLi)
+                    //         // console.log([...new Set(favmealsarr)]);
+                    // }
+                    // const favmealsUl = document.querySelector('#favmealss');
+                    // document.body.addEventListener('click', event => {
+                    //     // console.log(event);
+                    //     // console.log(event.target);
+                    //     if (event.target.className === 'add') {
+                    //         event.preventDefault();
+                    //         addtolist();
+                    //     }
+                    // })
                 }
             })
         });

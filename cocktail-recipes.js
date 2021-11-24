@@ -13,7 +13,7 @@ class CocktailRecipes{
     }
 
     render(){
-        
+        //let favmealsarr = []
         document.addEventListener('DOMContentLoaded', () =>{
 
             document.getElementById("cocktail-searchbtn").addEventListener("click", async ev => {
@@ -73,6 +73,22 @@ class CocktailRecipes{
                             favmealsUl.appendChild(favmealLi);
                         }
                     })
+
+                    // async function addtolist(){
+                    //     favmealsUl.innerHTML = ''
+                    //     favmealsarr.push(`<li>${strDrink} <p></p><button class="delete">Remove</button></li>`)
+                    //         let nodeDup = [...new Set(favmealsarr)];
+                    //         favmealsUl.innerHTML = nodeDup.join('')
+                    // }
+                    // const favmealsUl = document.querySelector('#favmealss');
+                    // document.body.addEventListener('click', event => {
+                    //     // console.log(event);
+                    //     // console.log(event.target);
+                    //     if (event.target.className === 'addCocktail') {
+                    //         event.preventDefault();
+                    //         addtolist();
+                    //     }
+                    // })
                 }
             })
         })
