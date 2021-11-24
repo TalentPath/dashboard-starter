@@ -35,9 +35,9 @@ class Restaurants {
                     <p>${restaurant.cuisines.join(',')}</p>
                     <a href=${restaurant.restaurant_website} target="_blank" class="active">Website</a>
                     <a href="tel:${restaurant.restaurant_phone}" target="_blank" class="active">Phone</a>
-                    <p>${restaurant.address.formatted}<p>
-                    <p id="restaurant-directions" class="active">Click Here for Directions</p>
-                    <p id="close" class="active">Close<p>`;
+                    <p>${restaurant.address.formatted}<p><br>
+                    <button id="restaurant-directions" class="active grow">Get Directions</button><br>
+                    <button id="close" class="active grow">Close</button>`;
 
                     const close = document.getElementById('close');
                     close.addEventListener('click', (event) => {

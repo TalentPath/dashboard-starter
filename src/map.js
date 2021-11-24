@@ -12,6 +12,7 @@ class Map {
     setMap(lat, lon) {
         const currentUrl = `https://www.mapquestapi.com/staticmap/v5/map?key=${this.mapKey}&center=${lat},${lon}&zoom=${this.zoom}`
         this.mapContainer.setAttribute('src', currentUrl);
+        this.mapContainer.setAttribute('alt', `Map of ${localStorage.cityName}`);
         this.lat = lat;
         this.lon = lon;
     }
@@ -50,9 +51,6 @@ class Map {
             if (getDirections.innerHTML === 'Get Directions') {
                 directions.style.visibility = 'visible';
                 getDirections.innerHTML = 'Hide Directions';
-                fromAddress.value = localStorage.address;
-                fromCity.value = localStorage.city;
-                fromState.value = localStorage.state;
             } else {
                 directionBox.innerHTML = '';
                 getDirections.innerHTML = 'Get Directions';
@@ -100,6 +98,7 @@ class Map {
                         const lineBreak = document.createElement('br');
                         const image = document.createElement('img');
                         image.setAttribute('src', maneuver.iconUrl);
+                        image.setAttribute('alt', 'Navigation instruction icon');
                         text.innerHTML = `${maneuver.narrative} - ${maneuver.distance.toFixed(1)} miles`;
                         current.appendChild(image);
                         current.appendChild(text);

@@ -27,10 +27,15 @@ class Events {
         const dateFilter = document.getElementById('date-filter');
             
         const filterListener = (event) => {
-            dateFilter.style.visibility === 'visible' 
-                ? dateFilter.style.visibility = 'hidden' 
-                : dateFilter.style.visibility = 'visible'; 
+            if (dateFilter.style.visibility === 'visible' ) {
+                dateFilter.style.visibility = 'hidden'; 
+                filter.innerHTML = 'Search Date';
+            } else {
+                dateFilter.style.visibility = 'visible'; 
+                filter.innerHTML = 'Close Search';
             }
+        }
+
         const dateFilterKeyDown = (event) => {
             event.preventDefault();
                 
@@ -54,16 +59,17 @@ class Events {
                     const current = document.createElement('div');
                     current.setAttribute('class', 'event active');
                     current.innerHTML = `<p>${new Date(event.datetime_local).getMonth() + 1}/${new Date(event.datetime_local).getDate()}</p>
-                        <p>${event.short_title}</p><p>${event.type.toUpperCase().split('_').join(' ')}</p><p>${event.venue.name}</p>`;
-                    current.addEventListener('click', (e) => {
+                        <p>${event.short_title}</p>`;
+                    
+                        current.addEventListener('click', (e) => {
                         this.eventContainer.innerHTML = `<h2>${event.title}</h2>
                         <a href=${event.url} target="_blank" class="active">Get Tickets</a>
                         <p>${event.type.toUpperCase().split('_').join(' ')}</p>
                         <p>${event.venue.name}</p>
                         <p>${event.venue.address}</p>
                         <p>${event.venue.display_location}</p>
-                        <p id="event-directions" class="active">Get Directions</p>
-                        <p id="event-close" class="active">Close</p>`;
+                        <button id="event-directions" class="active">Get Directions</button>
+                        <button id="event-close" class="active">Close</button>`;
 
                         const eventDirections = document.getElementById('event-directions');
                         const eventClose = document.getElementById('event-close');

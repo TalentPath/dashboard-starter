@@ -8,22 +8,22 @@
     <link rel="icon" 
       type="image/png" 
       href="city.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=M+PLUS+1+Code:wght@400;700&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
     <header>
         <img src="city.png" alt="City skyline" width="50px" height="50px"> 
         <h1>CITY DASH</h1>
-        <p id="reload" class="active">Reload Page</p>
+        <button id="reload" class="active grow">Reload Page</button>
     </header>
     <main>
         <aside id="weather">
             <h2 id="city"></h2>
-            <p id="weather-refresh" class="active">Refresh</p>
-            <p id="change" class="active">Change City</p>
+            <button id="weather-refresh" class="active grow weather">Refresh</button>
+            <button id="change" class="active grow weather">Change City</button>
             <form id="change-form">
                 <label for="address">Address: </label>
                 <input type="text" name="address" ><br>
@@ -83,11 +83,11 @@
                             <option value="WI">Wisconsin</option>
                             <option value="WY">Wyoming</option>
                 </select>
-                <button type="submit" class="active">Set New City</button>
+                <button type="submit" class="active grow">Set New City</button>
             </form>
             <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-            <p id="expand" class="active">See 5-day forcast</p>
-            <p id="contract" class="active"></p>
+            <button id="expand" class="active grow weather">See 5-day forecast</button>
+            <button id="contract" class="active grow weather"></button>
             <div id="forecast">
                 
             </div>
@@ -99,17 +99,17 @@
                 <div id="map-container">
                     <img id="map-image" src="">
                     <div id="buttons">
-                        <p id="plus" class="active">+</p>
-                        <p id="minus" class="active">-</p>
+                        <button id="plus" class="active">+</button>
+                        <button id="minus" class="active">-</button>
                     </div>
                 </div>
-                <button id="traffic" class="active">See Traffic</button>
+                <button id="traffic" class="active grow">See Traffic</button>
             </section>
             <section id="directions-container" class="panel">
                 <h2>Directions</h2>
-                <p id="get-directions" class="active">Get Directions</p>
+                <button id="get-directions" class="active grow">Get Directions</button>
                 <form id="directions">
-                    <p>From:</p>
+                    <p>From:</p><br>
                     <label for="fromAddress">Address: </label>
                     <input type="text" name="fromAddress" id="from-address"><br>
                     <label for="fromCity">City: </label>
@@ -168,7 +168,7 @@
                         <option value="WI">Wisconsin</option>
                         <option value="WY">Wyoming</option>
                     </select>
-                    <p>To:</p>
+                    <p>To:</p><br>
                     <label for="toAddress">Address: </label>
                     <input type="text" name="toAddress" id="toAddress"><br>
                     <label for="toCity">City: </label>
@@ -227,7 +227,7 @@
                                 <option value="WI">Wisconsin</option>
                                 <option value="WY">Wyoming</option>
                     </select><br>
-                    <button type="submit" class="active">Get Directions</button>
+                    <button type="submit" class="active grow">Get Directions</button>
                 </form>
                 <div id="direction-box"></div>
             </section>
@@ -235,13 +235,13 @@
         <div id="right">
             <section id="event-box" class="panel">
                 <h2>Events</h2>
-                <p id="filter" class="active">Search Date</p>
-                <input type="date" name="date" id="date-filter" class="active">
+                <button id="filter" class="active grow">Search Date</button>
+                <input type="date" name="date" id="date-filter" class="active" placeholder="">
                 <div id="events"></div>
             </section>
             <section id="restaurants-box" class="panel">
                 <h2>Restaurants</h2>
-                <p id="restaurant-filter" class="active">Search Cuisines</p>
+                <button id="restaurant-filter" class="active grow">Search Cuisines</button>
                 <select name="cuisine" id="cuisine" class="active">
                     <option value="italian">Italian</option>
                     <option value="asian">Asian</option>
@@ -254,8 +254,8 @@
                 </select>
                 <div id="restaurants"></div>
                 <div id="direction-buttons">
-                    <p id="back" class="active">Back</p>
-                    <p id="forward" class="active">Next</p>
+                    <button id="back" class="active grow">Back 5</button>
+                    <button id="forward" class="active grow">Next 5</button>
                 </div>
             </section>
         </div>

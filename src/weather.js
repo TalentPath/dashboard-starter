@@ -1,6 +1,5 @@
 import days from './days.js';
 
-
 class Weather {
     constructor(city) {
         this.city = city;
@@ -48,13 +47,9 @@ class Weather {
 
     startInterval = () => {
         this.weatherInterval = setInterval(() => {
-            this.index++;
-            console.log(this.index);
-            if (this.index % 5 === 0) {
-                this.currentIndex = (this.currentIndex + 1) % this.weatherInfo.forecast.forecastday.length;
-                this.setWeather(this.weatherInfo, this.currentIndex);
-            }
-        }, 1000)
+            this.currentIndex = (this.currentIndex + 1) % this.weatherInfo.forecast.forecastday.length;
+            this.setWeather(this.weatherInfo, this.currentIndex);
+        }, 5000)
     }
     
 
@@ -74,6 +69,7 @@ class Weather {
         current.setAttribute('id', index);
         current.setAttribute('class', 'active');
         currentImage.setAttribute('id', index);
+        currentImage.setAttribute('alt', `Weather condition: ${day.day.condition.text}`);
         currentDate.setAttribute('id', index);
         currentTemp.setAttribute('id', index);
         currentWind.setAttribute('id', index);
@@ -87,8 +83,8 @@ class Weather {
             clearInterval(this.weatherInterval);
             const currentDay = response.forecast.forecastday[event.target.id];
             console.log(event.target.id);
-            this.forecast.innerHTML = `<img src=${currentDay.day.condition.icon} class="icon">
-            <p>${event.target.id === 0 ? 'Today' : `${days[new Date(currentDay.date).getUTCDay()]} ${new Date(currentDay.date).getUTCMonth() + 1}/${new Date(currentDay.date).getUTCDate()}`}</p>
+            this.forecast.innerHTML = `<img src=${currentDay.day.condition.icon} alt="Weather condition: ${currentDay.day.condition.text}"class="icon">
+            <p>${event.target.id === 0 ? 'Today' : `${days[new Date(currentDay.date).getUTCDay()]} ${new Date(currentDay.date).getUTCMonth() + 1}/${new Date(currentDay.date).getUTCDate()}`}</p><br>
             <p>High: ${Math.floor(currentDay.day.maxtemp_f)}&deg; F</p>
             <p>Low: ${Math.floor(currentDay.day.mintemp_f)}&deg; F</p>
             <p>Wind: ${Math.floor(currentDay.day.maxwind_mph)} mph</p>
@@ -113,7 +109,7 @@ class Weather {
                             : `${Number(timeSplit[0])}:00AM`;
                         
                         hourlyBox.innerHTML += `<div><p>${time}</p>
-                        <img src=${hourData.condition.icon} class="icon">
+                        <img src=${hourData.condition.icon} alt="Weather condition: ${hourData.condition.text}"class="icon">
                         <p>${Math.floor(hourData.temp_f)}&deg; F</p><br></div>`
                         hourly.innerHTML = 'Hide Hourly Forecast';
                     })
@@ -143,6 +139,7 @@ class Weather {
 
             currentImage.setAttribute('src', day.day.condition.icon);
             currentImage.setAttribute('class', 'icon');
+            currentImage.setAttribute('alt', `Weather condition: ${day.day.condition.text}`)
             currentDate.innerHTML = i === 0 ? 'Today' : days[new Date(day.date).getUTCDay()];
             currentTemp.innerHTML = `${Math.floor(day.day.maxtemp_f)}&deg; F`;
             currentWind.innerHTML = `Wind: ${Math.floor(day.day.maxwind_mph)} mph`;
